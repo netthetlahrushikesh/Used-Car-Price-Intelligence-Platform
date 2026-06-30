@@ -35,6 +35,17 @@ data/tmp/**
 .ipynb_checkpoints/
 notebooks/outputs/
 
+# Local notebook audit trails and utility scripts kept out of the Stage 1 GitHub package.
+notebooks/build_*.py
+notebooks/final_snapshot_eda_baseline.py
+notebooks/high_scale_*.py
+notebooks/kaggle_collection_bridge.py
+notebooks/kaggle_three_model_eda_starter.py
+notebooks/used_car_price_intelligence_10_percent_target_modeling.*
+notebooks/used_car_price_intelligence_baseline_modeling.*
+notebooks/used_car_price_intelligence_gradient_boosting_modeling.*
+notebooks/used_car_price_intelligence_log_price_modeling.*
+
 # Local databases and artifacts
 *.duckdb
 *.duckdb.wal
