@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.playwright-cli/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+secrets/
+
+# Data
+data/raw/**
+data/bronze/**
+data/silver/**
+data/gold/**
+data/external/**
+data/tmp/**
+!data/README.md
+!data/*/.gitkeep
+
+# Notebooks
+.ipynb_checkpoints/
+notebooks/outputs/
+
+# Local databases and artifacts
+*.duckdb
+*.duckdb.wal
+*.db
+*.sqlite
+*.parquet
+*.csv
+*.jsonl
+*.log
+*.joblib
+*.pkl
+memory/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
