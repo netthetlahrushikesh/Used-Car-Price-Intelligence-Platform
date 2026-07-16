@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/netthetlahrushikesh/Used-Car-Price-Intelligence-Platform/schemas/prediction_response.schema.json",
+  "title": "Used Car Price Prediction Response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "model_version",
+    "model_name",
+    "prediction_target",
+    "predicted_price_inr",
+    "price_range_low_inr",
+    "price_range_high_inr",
+    "price_range_pct",
+    "confidence",
+    "price_band",
+    "warning_codes",
+    "input_normalized",
+    "explanation"
+  ],
+  "properties": {
+    "model_version": {"type": "string"},
+    "model_name": {"type": "string"},
+    "prediction_target": {"type": "string", "const": "listed_price_inr"},
+    "predicted_price_inr": {"type": "integer", "minimum": 0},
+    "price_range_low_inr": {"type": "integer", "minimum": 0},
+    "price_range_high_inr": {"type": "integer", "minimum": 0},
+    "price_range_pct": {"type": "number", "minimum": 0},
+    "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+    "price_band": {"type": "string"},
+    "warning_codes": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "input_normalized": {"type": "object"},
+    "explanation": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}

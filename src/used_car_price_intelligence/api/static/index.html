@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A trusted-source used car listed-price estimation workspace."
+    />
+    <title>Used Car Price Intelligence</title>
+    <link rel="stylesheet" href="/static/styles.css?v=20260710-r3" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="side-rail" aria-label="Application navigation">
+        <a class="rail-logo" href="#estimator" aria-label="Price estimator" data-tooltip="Price estimator">
+          <i data-lucide="car-front" aria-hidden="true"></i>
+        </a>
+
+        <nav class="rail-nav" aria-label="Workspace sections">
+          <a class="rail-link is-active" href="#estimator" aria-label="Estimate" data-tooltip="Estimate">
+            <i data-lucide="wand-sparkles" aria-hidden="true"></i>
+          </a>
+          <a class="rail-link" href="#coverage" aria-label="Model coverage" data-tooltip="Model coverage">
+            <i data-lucide="chart-no-axes-combined" aria-hidden="true"></i>
+          </a>
+          <a class="rail-link" href="#method" aria-label="Method notes" data-tooltip="Method notes">
+            <i data-lucide="circle-help" aria-hidden="true"></i>
+          </a>
+        </nav>
+
+        <a class="rail-link rail-link--bottom" href="/docs" target="_blank" rel="noreferrer" aria-label="API documentation" data-tooltip="API documentation">
+          <i data-lucide="braces" aria-hidden="true"></i>
+        </a>
+      </aside>
+
+      <div class="app-content">
+        <header class="topbar">
+          <div>
+            <p class="breadcrumb">Model workspace <span>/</span> Listed-price estimate</p>
+            <h1>Used Car Price Intelligence</h1>
+          </div>
+          <div class="model-status" id="healthStatus" aria-live="polite">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span>Checking model</span>
+          </div>
+        </header>
+
+        <main class="workspace" id="estimator">
+          <section class="estimate-panel" aria-labelledby="formTitle">
+            <div class="panel-intro">
+              <p class="eyebrow"><i data-lucide="route" aria-hidden="true"></i> Guided estimate</p>
+              <h2 id="formTitle">Tell us about the car</h2>
+              <p>Use the vehicle details that materially change a listed-price estimate.</p>
+            </div>
+
+            <ol class="journey-steps" aria-label="Estimate input progress">
+              <li class="journey-step is-active" data-step="1">
+                <span>1</span>
+                <div><strong>Vehicle</strong><small>Brand and model</small></div>
+              </li>
+              <li class="journey-step" data-step="2">
+                <span>2</span>
+                <div><strong>Usage</strong><small>Year and kilometers</small></div>
+              </li>
+              <li class="journey-step" data-step="3">
+                <span>3</span>
+                <div><strong>Market</strong><small>City and fuel</small></div>
+              </li>
+            </ol>
+
+            <form id="predictionForm" class="estimate-form" novalidate>
+              <div class="form-grid">
+                <label class="form-field">
+                  <span>Brand <b aria-hidden="true">*</b></span>
+                  <input name="brand" required value="Maruti Suzuki" autocomplete="off" />
+                </label>
+                <label class="form-field">
+                  <span>Model <b aria-hidden="true">*</b></span>
+                  <input name="model" required value="Swift" autocomplete="off" />
+                </label>
+                <label class="form-field form-field--wide">
+                  <span>Variant <em>optional</em></span>
+                  <input name="variant" value="VXI" autocomplete="off" />
+                </label>
+                <label class="form-field">
+                  <span>Model year <b aria-hidden="true">*</b></span>
+                  <input name="model_year" required type="number" min="2000" max="2026" value="2019" />
+                </label>
+                <label class="form-field">
+                  <span>Kilometers driven <b aria-hidden="true">*</b></span>
+                  <input name="km_driven" required type="number" min="0" max="300000" step="500" value="45000" />
+                </label>
+                <label class="form-field">
+                  <span>Fuel type <b aria-hidden="true">*</b></span>
+                  <select name="fuel_type" required>
+                    <option value="petrol">Petrol</option>
+                    <option value="diesel">Diesel</option>
+                    <option value="cng">CNG</option>
+                    <option value="petrol_cng">Petrol CNG</option>
+                    <option value="electric">Electric</option>
+                    <option value="hybrid">Hybrid</option>
+                  </select>
+                </label>
+                <label class="form-field">
+                  <span>Transmission <b aria-hidden="true">*</b></span>
+                  <select name="transmission" required>
+                    <option value="manual">Manual</option>
+                    <option value="automatic">Automatic</option>
+                    <option value="amt">AMT</option>
+                  </select>
+                </label>
+                <label class="form-field form-field--wide">
+                  <span>City <b aria-hidden="true">*</b></span>
+                  <input name="city" required value="Hyderabad" autocomplete="off" />
+                </label>
+                <label class="form-field form-field--wide">
+                  <span>Ownership <em>optional</em></span>
+                  <select name="ownership">
+                    <option value="1">First owner</option>
+                    <option value="2">Second owner</option>
+                    <option value="3">Third owner</option>
+                    <option value="4">Fourth owner</option>
+                    <option value="unknown">Unknown</option>
+                  </select>
+                </label>
+              </div>
+
+              <details class="advanced-fields">
+                <summary>
+                  <span><i data-lucide="sliders-horizontal" aria-hidden="true"></i> Advanced vehicle context</span>
+                  <i class="summary-icon" data-lucide="chevron-down" aria-hidden="true"></i>
+                </summary>
+                <p>Use these only when the details are known. They are optional model inputs.</p>
+                <div class="advanced-grid">
+                  <label class="form-field">
+                    <span>State</span>
+                    <input name="state" value="Telangana" autocomplete="off" />
+                  </label>
+                  <label class="form-field">
+                    <span>Registration code</span>
+                    <input name="registration_code" value="TS" autocomplete="off" />
+                  </label>
+                  <label class="form-field form-field--wide">
+                    <span>Source context</span>
+                    <select name="source_context">
+                      <option value="market_default">Market default</option>
+                      <option value="true_value">True Value</option>
+                      <option value="spinny">Spinny</option>
+                      <option value="mahindra_first_choice">Mahindra First Choice</option>
+                    </select>
+                  </label>
+                </div>
+              </details>
+
+              <button class="estimate-button" type="submit" id="estimateButton">
+                <i data-lucide="calculator" aria-hidden="true"></i>
+                <span class="button-label">Estimate fair price</span>
+              </button>
+              <p class="form-status" id="formStatus" aria-live="polite">
+                <i data-lucide="shield-check" aria-hidden="true"></i>
+                <span>Required estimate details are ready.</span>
+              </p>
+            </form>
+          </section>
+
+          <section class="result-stage" aria-labelledby="resultTitle" aria-live="polite">
+            <div class="result-header">
+              <div>
+                <p class="eyebrow"><i data-lucide="sparkles" aria-hidden="true"></i> Pricing result</p>
+                <h2 id="resultTitle">Fair listed-price range</h2>
+              </div>
+              <span class="result-state" id="resultState">Sample estimate</span>
+            </div>
+
+            <div class="price-hero">
+              <p id="resultSubtitle">Loading the prefilled example vehicle.</p>
+              <strong class="price-value" id="predictedPrice">--</strong>
+              <p class="price-range" id="priceRange">A model range will appear here.</p>
+            </div>
+
+            <section class="range-explainer" aria-labelledby="rangeTitle">
+              <div class="range-heading">
+                <h3 id="rangeTitle">Where this estimate sits</h3>
+                <span id="rangePct">--</span>
+              </div>
+              <div class="range-ruler" aria-label="Estimated price range">
+                <span class="range-marker" id="rangeMarker" aria-hidden="true"></span>
+              </div>
+              <div class="range-labels">
+                <span><small>Lower guide</small><b id="rangeLow">--</b></span>
+                <span class="range-mid"><small>Model estimate</small><b id="rangeMid">--</b></span>
+                <span><small>Higher guide</small><b id="rangeHigh">--</b></span>
+              </div>
+              <p class="range-note" id="rangeNote">The range helps frame a listed-price discussion, not a final sale price.</p>
+            </section>
+
+            <div class="result-columns">
+              <section class="insight-section" aria-labelledby="whyTitle">
+                <div class="section-heading-row">
+                  <h3 id="whyTitle">Why this estimate</h3>
+                  <span class="confidence-badge neutral" id="confidenceValue">Waiting</span>
+                </div>
+                <ul class="insight-list" id="insightList">
+                  <li>Vehicle details will be summarized here.</li>
+                  <li>Confidence reflects model coverage and risk flags.</li>
+                </ul>
+              </section>
+
+              <section class="coverage-section" id="coverage" aria-labelledby="coverageTitle">
+                <div class="section-heading-row">
+                  <h3 id="coverageTitle">Coverage status</h3>
+                  <span class="price-band" id="priceBand">--</span>
+                </div>
+                <p id="coverageCopy">Run an estimate to see model coverage notes for this configuration.</p>
+                <div class="warning-chips" id="warningChips"></div>
+              </section>
+            </div>
+
+            <div class="estimate-note">
+              <i data-lucide="info" aria-hidden="true"></i>
+              <p>Estimated listed price only. It is not a final sale price, certification, or dealer quote.</p>
+            </div>
+
+            <div class="model-footnote" id="method">
+              <i data-lucide="database-zap" aria-hidden="true"></i>
+              <p id="modelContext">Loading model validation context.</p>
+            </div>
+          </section>
+
+          <aside class="inspection-panel" aria-label="Trusted source model context">
+            <img src="/static/assets/inspection-bay.jpg" alt="Vehicle inspector assessing an SUV in an indoor inspection bay" />
+            <div class="inspection-copy">
+              <p class="eyebrow">Trusted-source model</p>
+              <h2>Data-backed pricing starts with verified vehicle context.</h2>
+              <p>Built from trusted inventory snapshots and a separate historical True Value dataset.</p>
+            </div>
+          </aside>
+        </main>
+
+        <footer class="app-footer">
+          <span>Price intelligence for research and decision support.</span>
+          <a href="/docs" target="_blank" rel="noreferrer">Open API documentation <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+        </footer>
+      </div>
+    </div>
+
+    <script src="/static/assets/lucide.min.js?v=20260710-r2" defer></script>
+    <script src="/static/app.js?v=20260710-r2" defer></script>
+  </body>
+</html>

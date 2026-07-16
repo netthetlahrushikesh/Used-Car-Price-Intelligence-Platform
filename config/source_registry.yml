@@ -1,0 +1,480 @@
+version: 0.1
+created_at: 2026-06-24
+default_city: Hyderabad
+purpose: >
+  Source registry for used-car acquisition planning. This file records source
+  URLs, visible fields, missing fields, extraction risk, and first-adapter
+  priority before scraper code is written.
+
+field_tiers:
+  core_required:
+    - source
+    - source_listing_id_or_listing_url
+    - captured_at
+    - city
+    - brand
+    - model
+    - model_year
+    - listed_price_inr
+    - km_driven
+    - fuel_type
+    - transmission
+    - raw_record_hash
+    - ingestion_run_id
+  high_value:
+    - variant
+    - ownership
+    - registration_code
+    - locality
+    - seller_type
+    - is_certified
+    - is_available
+  enrichment:
+    - emi_amount_inr
+    - original_price_inr
+    - discount_amount_inr
+    - deal_rating
+    - inspection_status
+    - inspection_score
+    - warranty_label
+    - return_policy_label
+    - finance_label
+    - hub_name
+    - dealer_name
+    - listing_posted_at
+    - body_type
+    - color
+    - seating_capacity
+    - image_url_count
+    - source_quality_tags
+
+source_types:
+  marketplace: Multi-brand used-car marketplace.
+  classified: Classified listing platform with mixed private and dealer stock.
+  oem_certified: Manufacturer-backed certified used-car program.
+  dealer_certified: Dealer or certification-led used-car platform.
+  auction_wholesale: Auction, dealer, or wholesale-oriented source.
+
+sources:
+  - name: spinny
+    display_name: Spinny
+    source_type: marketplace
+    base_url: https://www.spinny.com
+    city_url: https://www.spinny.com/used-cars-in-hyderabad/s/
+    first_adapter_priority: 1
+    recommended_role: first_verified_source
+    requires_js_rendering: true
+    pagination_type: infinite_scroll_or_dynamic_listing
+    visible_core_fields:
+      - listed_price_inr
+      - model_year
+      - brand
+      - model
+      - variant
+      - km_driven
+      - fuel_type
+      - transmission
+      - registration_code
+      - locality
+    visible_high_value_fields:
+      - is_certified
+      - hub_name
+      - finance_label
+    likely_missing_fields:
+      - ownership
+      - seller_type
+    known_data_risks:
+      - km_values_may_use_k_suffix
+      - variant_contains_trim_engine_and_gearbox_text
+      - owner_count_not_obvious_on_listing_cards
+    notes: Preferred first candidate because listing cards expose most pricing-critical fields and the platform positions inventory as inspected/assured.
+
+  - name: cardekho
+    display_name: CarDekho
+    source_type: marketplace
+    base_url: https://www.cardekho.com
+    city_url: https://www.cardekho.com/used-cars+in+hyderabad
+    first_adapter_priority: 8
+    recommended_role: filtered_marketplace_source
+    requires_js_rendering: true
+    pagination_type: paginated_or_dynamic_listing
+    visible_core_fields:
+      - listed_price_inr
+      - model_year
+      - brand
+      - model
+      - km_driven
+      - fuel_type
+      - transmission
+      - locality
+    visible_high_value_fields:
+      - ownership
+      - seller_type
+      - inspection_status
+      - warranty_label
+      - deal_rating
+    likely_missing_fields:
+      - registration_code
+      - clean_variant
+    known_data_risks:
+      - owner_count_can_appear_inside_natural_language_text
+      - ads_and_curated_sections_can_mix_with_listing_cards
+      - ai_generated_listing_descriptions_need_confidence_flags
+    notes: Rich source but not a first MVP source unless filtered to trusted/certified listings; parser should be stricter because text can be narrative.
+
+  - name: olx
+    display_name: OLX
+    source_type: classified
+    base_url: https://www.olx.in
+    city_url: https://www.olx.in/hyderabad_g4058526/cars_c84
+    first_adapter_priority: 99
+    recommended_role: research_only_noisy_classified_source
+    requires_js_rendering: true
+    pagination_type: dynamic_listing
+    visible_core_fields:
+      - listed_price_inr
+      - model_year
+      - brand
+      - model
+      - km_driven
+      - locality
+    visible_high_value_fields:
+      - ownership
+      - seller_type
+      - listing_posted_at
+      - finance_label
+    likely_missing_fields:
+      - fuel_type
+      - transmission
+      - registration_code
+      - clean_variant
+    known_data_risks:
+      - classified_titles_are_noisy
+      - fuel_and_transmission_may_require_detail_page
+      - duplicate_or_reposted_listings_are_possible
+      - self_listed_records_can_be_incomplete_or_misleading
+      - direct_owner_and_dealer_listings_are_mixed
+    notes: Keep for noisy fixture and quarantine stress testing only; do not use as an MVP acquisition source.
+
+  - name: cars24
+    display_name: Cars24
+    source_type: marketplace
+    base_url: https://www.cars24.com
+    city_url: https://www.cars24.com/buy-used-cars-hyderabad/
+    first_adapter_priority: 3
+    recommended_role: verified_platform_source
+    requires_js_rendering: true
+    pagination_type: dynamic_listing
+    visible_core_fields:
+      - listed_price_inr
+      - model_year
+      - brand
+      - model
+      - variant
+      - km_driven
+      - fuel_type
+      - transmission
+      - registration_code
+      - locality
+    visible_high_value_fields:
+      - is_certified
+      - emi_amount_inr
+      - hub_name
+    likely_missing_fields:
+      - ownership
+      - seller_type
+    known_data_risks:
+      - prices_may_include_multiple_amounts
+      - extra_charges_text_needs_separate_flag
+      - previous_project_used_brittle_css_selectors
+    notes: Useful benchmark because the old project used Cars24; stronger MVP candidate than classifieds when focusing on verified/inspected stock.
+
+  - name: mahindra_first_choice
+    display_name: Mahindra First Choice
+    source_type: dealer_certified
+    base_url: https://www.mahindrafirstchoice.com
+    city_url: https://www.mahindrafirstchoice.com/used-cars/hyderabad
+    first_adapter_priority: 2
+    recommended_role: clean_certified_source
+    requires_js_rendering: true
+    pagination_type: dynamic_listing
+    visible_core_fields:
+      - listed_price_inr
+      - model_year
+      - brand
+      - model
+      - variant
+      - km_driven
+      - fuel_type
+      - transmission
+      - locality
+    visible_high_value_fields:
+      - is_certified
+      - deal_rating
+      - warranty_label
+    likely_missing_fields:
+      - ownership
+      - registration_code
+    known_data_risks:
+      - certified_stock_bias
+      - rating_is_source_specific
+    notes: Strong controlled certified source; less representative of the whole market but better for clean early data.
+
+  - name: carwale
+    display_name: CarWale
+    source_type: marketplace
+    base_url: https://www.carwale.com
+    city_url: https://www.carwale.com/used/hyderabad/
+    first_adapter_priority: 9
+    recommended_role: market_coverage_reference
+    requires_js_rendering: true
+    pagination_type: paginated_or_dynamic_listing
+    visible_core_fields:
+      - listed_price_inr
+      - locality
+    visible_high_value_fields:
+      - seller_type
+      - is_certified
+    likely_missing_fields:
+      - clean_card_level_brand_model
+      - registration_code
+      - ownership
+    known_data_risks:
+      - initial_evidence_is_stronger_for_aggregates_than_listing_cards
+      - rendered_page_inspection_needed
+    notes: Useful for market-size context and later source expansion.
+
+  - name: cartrade
+    display_name: CarTrade
+    source_type: marketplace
+    base_url: https://www.cartrade.com
+    city_url: https://www.cartrade.com/second-hand/hyderabad/
+    first_adapter_priority: 10
+    recommended_role: later_marketplace_source
+    requires_js_rendering: true
+    pagination_type: paginated_or_dynamic_listing
+    visible_core_fields:
+      - listed_price_inr
+      - model_year
+      - brand
+      - model
+      - km_driven
+      - fuel_type
+      - locality
+    visible_high_value_fields:
+      - seller_type
+      - dealer_name
+    likely_missing_fields:
+      - registration_code
+      - ownership
+      - transmission
+      - clean_variant
+    known_data_risks:
+      - templated_placeholder_content_seen_in_initial_recon
+      - seller_phone_should_not_be_collected
+    notes: Later candidate after core parser pipeline exists.
+
+  - name: droom
+    display_name: Droom
+    source_type: marketplace
+    base_url: https://droom.in
+    city_url: https://droom.in/cars/used
+    first_adapter_priority: 11
+    recommended_role: later_research_source
+    requires_js_rendering: true
+    pagination_type: dynamic_listing
+    visible_core_fields:
+      - listed_price_inr
+    visible_high_value_fields:
+      - is_certified
+      - deal_rating
+      - finance_label
+    likely_missing_fields:
+      - clean_card_level_brand_model
+      - km_driven
+      - fuel_type
+      - transmission
+      - ownership
+      - registration_code
+    known_data_risks:
+      - more_detail_page_research_needed
+      - trust_score_is_source_specific
+    notes: Not a first adapter until listing-card fields are clearer.
+
+  - name: true_value
+    display_name: Maruti Suzuki True Value
+    source_type: oem_certified
+    base_url: https://www.marutisuzukitruevalue.com
+    city_url: https://www.marutisuzukitruevalue.com/buy-car
+    first_adapter_priority: 3
+    recommended_role: validated_oem_certified_source
+    requires_js_rendering: true
+    pagination_type: dealer_discovery_plus_graphql
+    visible_core_fields:
+      - listed_price_inr
+      - model_year
+      - brand
+      - model
+      - variant
+      - km_driven
+      - fuel_type
+      - transmission
+      - locality
+    visible_high_value_fields:
+      - ownership
+      - registration_code
+      - is_certified
+      - dealer_name
+      - inspection_status
+      - body_type
+      - color
+    likely_missing_fields:
+      - cross_source_condition_score
+      - accident_history
+      - service_history_available
+      - return_policy_label
+      - seating_capacity
+    known_data_risks:
+      - maruti_only_brand_bias
+      - source_total_changes_with_live_inventory
+      - dealer_radius_changes_inventory_pool
+      - certification_status_is_source_specific
+      - not_all_rows_are_true_value_certified
+      - direct_dealer_contact_fields_should_not_be_collected
+    notes: Validated through Hyderabad live smoke on 2026-06-25. Strong trusted source, but Maruti-only brand bias means it should complement multi-brand sources rather than replace them.
+
+  - name: true_value_external_kaggle
+    display_name: True Value External Kaggle Dataset
+    source_type: oem_certified_external_dataset
+    base_url: https://www.kaggle.com/datasets/focusedmonk/true-value-cars-dataset
+    city_url: https://www.kaggle.com/datasets/focusedmonk/true-value-cars-dataset
+    first_adapter_priority: 31
+    recommended_role: external_true_value_modeling_source
+    requires_js_rendering: false
+    pagination_type: static_external_csv
+    visible_core_fields:
+      - listed_price_inr
+      - model_year
+      - brand
+      - model
+      - variant
+      - km_driven
+      - fuel_type
+      - transmission
+      - city
+    visible_high_value_fields:
+      - ownership
+      - registration_code
+      - body_type
+      - is_certified
+      - is_available
+      - original_price_inr
+      - emi_amount_inr
+    likely_missing_fields:
+      - live_listing_url
+      - dealer_name
+      - accident_history
+      - service_history_available
+      - color
+      - seating_capacity
+    known_data_risks:
+      - historical_2021_snapshot_not_current_market
+      - external_dataset_lineage_not_live_scraper_lineage
+      - original_train_test_split_is_not_project_model_split
+      - raw_id_repeats_between_train_and_test_files
+      - not_all_rows_are_assured_buy
+      - customer_to_customer_rows_must_be_quarantined_from_trusted_modeling
+    notes: External CC0 Kaggle dataset used only as a separated True Value-only modeling package. It must not be mixed into live scraped gold snapshots without an explicit bridge manifest.
+
+  - name: honda_auto_terrace
+    display_name: Honda Auto Terrace
+    source_type: oem_certified
+    base_url: https://www.hondaautoterrace.com
+    city_url: https://www.hondaautoterrace.com/used-cars/+in-hyderabad
+    first_adapter_priority: 4
+    recommended_role: later_oem_certified_source
+    requires_js_rendering: true
+    pagination_type: dynamic_listing
+    visible_core_fields:
+      - listed_price_inr
+      - model_year
+      - brand
+      - model
+      - km_driven
+      - fuel_type
+      - transmission
+    visible_high_value_fields:
+      - ownership
+      - body_type
+      - color
+      - seating_capacity
+    likely_missing_fields:
+      - registration_code
+      - clean_variant
+    known_data_risks:
+      - brand_bias
+      - detail_page_may_be_required_for_owner
+    notes: Trusted OEM certified source with strong inspection/service-history claims; useful after first multi-brand source.
+
+  - name: hyundai_promise
+    display_name: Hyundai Promise
+    source_type: oem_certified
+    base_url: https://clicktobuy.hyundai.co.in
+    city_url: https://clicktobuy.hyundai.co.in/hyundaipromise/
+    first_adapter_priority: 6
+    recommended_role: later_oem_certified_source
+    requires_js_rendering: true
+    pagination_type: dynamic_listing
+    visible_core_fields:
+      - listed_price_inr
+      - model_year
+      - brand
+      - model
+      - variant
+      - fuel_type
+      - transmission
+    visible_high_value_fields:
+      - is_certified
+      - warranty_label
+      - inspection_status
+      - dealer_name
+    likely_missing_fields:
+      - km_driven
+      - ownership
+      - registration_code
+    known_data_risks:
+      - brand_bias
+      - dealer_page_variability
+      - kilometers_need_deeper_inspection
+    notes: Trusted OEM certified source; useful for Hyundai-specific certified inventory after the core pipeline exists.
+
+  - name: toyota_u_trust
+    display_name: Toyota U Trust
+    source_type: oem_certified
+    base_url: https://www.toyotautrust.in
+    city_url: https://www.toyotautrust.in/used-cars/hyderabad
+    first_adapter_priority: 7
+    recommended_role: later_oem_certified_source
+    requires_js_rendering: true
+    pagination_type: dynamic_listing
+    visible_core_fields:
+      - listed_price_inr
+      - model_year
+      - brand
+      - model
+      - variant
+    visible_high_value_fields:
+      - is_certified
+      - warranty_label
+      - inspection_status
+      - dealer_name
+    likely_missing_fields:
+      - km_driven
+      - fuel_type
+      - transmission
+      - ownership
+      - registration_code
+    known_data_risks:
+      - brand_bias
+      - detail_page_needed_for_more_core_fields
+    notes: Trusted OEM certified source with strong certification/warranty positioning; useful after first multi-brand source.

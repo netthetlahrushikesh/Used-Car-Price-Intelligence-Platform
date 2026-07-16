@@ -1,0 +1,211 @@
+{
+  "source": "mahindra_first_choice",
+  "source_url": "https://www.mahindrafirstchoice.com/used-cars/hyderabad",
+  "captured_for": "parser_and_adapter_fixture",
+  "fixture_created_at": "2026-06-25",
+  "capture_method": "public_page_text_fixture",
+  "records": [
+    {
+      "raw": {
+        "score": "8.1",
+        "title": "2022 Mahindra Scorpio",
+        "variant_details": "S11 2WD BS IV | 15,214 km | Diesel | Manual",
+        "variant": "S11 2WD BS IV",
+        "km": "15,214 km",
+        "fuel": "Diesel",
+        "transmission": "Manual",
+        "price": "Rs. 19.5 Lakh",
+        "locality": "Cyberabad, Hyderabad"
+      },
+      "expected": {
+        "model_year": 2022,
+        "brand": "Mahindra",
+        "model": "Scorpio",
+        "listed_price_inr": 1950000,
+        "km_driven": 15214,
+        "fuel_type": "diesel",
+        "transmission": "manual"
+      }
+    },
+    {
+      "raw": {
+        "score": "8.8",
+        "title": "2023 Mahindra XUV700",
+        "variant_details": "AX7 7 STR | 6,151 km | Petrol | Manual",
+        "variant": "AX7 7 STR",
+        "km": "6,151 km",
+        "fuel": "Petrol",
+        "transmission": "Manual",
+        "price": "Rs. 22.75 Lakh",
+        "locality": "Cyberabad, Hyderabad"
+      },
+      "expected": {
+        "model_year": 2023,
+        "brand": "Mahindra",
+        "model": "XUV700",
+        "listed_price_inr": 2275000,
+        "km_driven": 6151,
+        "fuel_type": "petrol",
+        "transmission": "manual"
+      }
+    },
+    {
+      "raw": {
+        "score": "9.0",
+        "title": "2025 Mahindra XUV700",
+        "variant_details": "AX7 7 STR | 5,904 km | Diesel | Automatic",
+        "variant": "AX7 7 STR",
+        "km": "5,904 km",
+        "fuel": "Diesel",
+        "transmission": "Automatic",
+        "price": "Rs. 27.5 Lakh",
+        "emi": "Rs. 58,169/month",
+        "locality": "Cyberabad, Hyderabad"
+      },
+      "expected": {
+        "model_year": 2025,
+        "brand": "Mahindra",
+        "model": "XUV700",
+        "listed_price_inr": 2750000,
+        "km_driven": 5904,
+        "fuel_type": "diesel",
+        "transmission": "automatic"
+      }
+    },
+    {
+      "raw": {
+        "score": "8.3",
+        "title": "2021 Mahindra Bolero Neo",
+        "variant_details": "N10 | 26,916 km | Diesel | Manual",
+        "variant": "N10",
+        "km": "26,916 km",
+        "fuel": "Diesel",
+        "transmission": "Manual",
+        "price": "Rs. 9.5 Lakh",
+        "locality": "Hyderabad"
+      },
+      "expected": {
+        "model_year": 2021,
+        "brand": "Mahindra",
+        "model": "Bolero Neo",
+        "listed_price_inr": 950000,
+        "km_driven": 26916,
+        "fuel_type": "diesel",
+        "transmission": "manual"
+      }
+    },
+    {
+      "raw": {
+        "score": "8.6",
+        "title": "2021 Maruti Suzuki S-Presso",
+        "variant_details": "VXI AGS | 38,281 km | Petrol | AMT",
+        "variant": "VXI AGS",
+        "km": "38,281 km",
+        "fuel": "Petrol",
+        "transmission": "AMT",
+        "price": "Rs. 4 Lakh",
+        "emi": "Rs. 8,959/month",
+        "locality": "Hyderabad"
+      },
+      "expected": {
+        "model_year": 2021,
+        "brand": "Maruti Suzuki",
+        "model": "S-Presso",
+        "listed_price_inr": 400000,
+        "km_driven": 38281,
+        "fuel_type": "petrol",
+        "transmission": "amt"
+      }
+    },
+    {
+      "raw": {
+        "score": "7.1",
+        "title": "2015 Maruti Suzuki Wagon R",
+        "variant_details": "VXI A 1.0 BS IV | 66,000 km | Petrol | AMT",
+        "variant": "VXI A 1.0 BS IV",
+        "km": "66,000 km",
+        "fuel": "Petrol",
+        "transmission": "AMT",
+        "price": "Rs. 3.35 Lakh",
+        "locality": "Hyderabad"
+      },
+      "expected": {
+        "model_year": 2015,
+        "brand": "Maruti Suzuki",
+        "model": "Wagon R",
+        "listed_price_inr": 335000,
+        "km_driven": 66000,
+        "fuel_type": "petrol",
+        "transmission": "amt"
+      }
+    },
+    {
+      "raw": {
+        "score": "8.5",
+        "title": "2023 Mahindra XUV700",
+        "variant_details": "AX7 7 STR | 8,021 km | Petrol | Automatic",
+        "variant": "AX7 7 STR",
+        "km": "8,021 km",
+        "fuel": "Petrol",
+        "transmission": "Automatic",
+        "price": "Rs. 24 Lakh",
+        "emi": "Rs. 50,765/month",
+        "locality": "Cyberabad, Hyderabad"
+      },
+      "expected": {
+        "model_year": 2023,
+        "brand": "Mahindra",
+        "model": "XUV700",
+        "listed_price_inr": 2400000,
+        "km_driven": 8021,
+        "fuel_type": "petrol",
+        "transmission": "automatic"
+      }
+    },
+    {
+      "raw": {
+        "score": "7.4",
+        "title": "2014 Hyundai Grand i10",
+        "variant_details": "1.2 Sportz BS IV | 47,614 km | Petrol | Manual",
+        "variant": "1.2 Sportz BS IV",
+        "km": "47,614 km",
+        "fuel": "Petrol",
+        "transmission": "Manual",
+        "price": "Rs. 4 Lakh",
+        "locality": "Medipalli, Hyderabad"
+      },
+      "expected": {
+        "model_year": 2014,
+        "brand": "Hyundai",
+        "model": "Grand i10",
+        "listed_price_inr": 400000,
+        "km_driven": 47614,
+        "fuel_type": "petrol",
+        "transmission": "manual"
+      }
+    },
+    {
+      "raw": {
+        "score": "7.2",
+        "title": "2018 Honda BR-V",
+        "variant_details": "V | 34,378 km | Petrol | Automatic",
+        "variant": "V",
+        "km": "34,378 km",
+        "fuel": "Petrol",
+        "transmission": "Automatic",
+        "price": "Rs. 7.75 Lakh",
+        "emi": "Rs. 17,357/month",
+        "locality": "Balanagar Township, Hyderabad"
+      },
+      "expected": {
+        "model_year": 2018,
+        "brand": "Honda",
+        "model": "BR-V",
+        "listed_price_inr": 775000,
+        "km_driven": 34378,
+        "fuel_type": "petrol",
+        "transmission": "automatic"
+      }
+    }
+  ]
+}

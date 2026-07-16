@@ -1,0 +1,40 @@
+{
+  "artifact_dir": "C:\\Users\\hrush\\Desktop\\Used Car Price Intelligence Platform\\artifacts\\model\\final_price_model_v1",
+  "dataset": "C:\\Users\\hrush\\Desktop\\Used Car Price Intelligence Platform\\kaggle_upload\\used-car-price-intelligence-trusted-modeling-datasets\\combined_trusted_modeling_dataset_9110.csv",
+  "saved_paths": {
+    "artifact": "C:\\Users\\hrush\\Desktop\\Used Car Price Intelligence Platform\\artifacts\\model\\final_price_model_v1\\final_price_model_v1.joblib",
+    "metadata": "C:\\Users\\hrush\\Desktop\\Used Car Price Intelligence Platform\\artifacts\\model\\final_price_model_v1\\metadata.json",
+    "feature_schema": "C:\\Users\\hrush\\Desktop\\Used Car Price Intelligence Platform\\artifacts\\model\\final_price_model_v1\\feature_schema.json"
+  },
+  "sample_prediction": {
+    "model_version": "final_price_model_v1",
+    "model_name": "Combined Trusted Lineage Target-Encoded Native HGB",
+    "prediction_target": "listed_price_inr",
+    "predicted_price_inr": 492808,
+    "price_range_low_inr": 433671,
+    "price_range_high_inr": 551945,
+    "price_range_pct": 12.0,
+    "confidence": "high",
+    "price_band": "2.5L_5L",
+    "warning_codes": [],
+    "input_normalized": {
+      "brand": "Maruti Suzuki",
+      "model": "Swift",
+      "variant": "VXI",
+      "model_year": 2019,
+      "km_driven": 45000,
+      "fuel_type": "petrol",
+      "transmission": "manual",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "ownership": 1,
+      "registration_code": "TS",
+      "source_context": "market_default",
+      "market_snapshot_year": 2026
+    },
+    "explanation": [
+      "Prediction is a listed-price estimate, not a final transaction price.",
+      "Confidence is based on training coverage, segment risk, and known model limitations."
+    ]
+  }
+}

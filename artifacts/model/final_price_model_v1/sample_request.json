@@ -1,0 +1,14 @@
+{
+  "brand": "Maruti Suzuki",
+  "model": "Swift",
+  "variant": "VXI",
+  "model_year": 2019,
+  "km_driven": 45000,
+  "fuel_type": "petrol",
+  "transmission": "manual",
+  "city": "Hyderabad",
+  "state": "Telangana",
+  "ownership": 1,
+  "registration_code": "TS",
+  "source_context": "market_default"
+}

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/netthetlahrushikesh/Used-Car-Price-Intelligence-Platform/schemas/prediction_request.schema.json",
+  "title": "Used Car Price Prediction Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "brand",
+    "model",
+    "model_year",
+    "km_driven",
+    "fuel_type",
+    "transmission",
+    "city"
+  ],
+  "properties": {
+    "brand": {
+      "type": "string",
+      "minLength": 1,
+      "examples": ["Maruti Suzuki", "Hyundai", "Honda"]
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1,
+      "examples": ["Swift", "Wagon R", "City"]
+    },
+    "variant": {
+      "type": "string",
+      "default": "unknown",
+      "examples": ["VXI", "ZX CVT", "Sportz"]
+    },
+    "model_year": {
+      "type": "integer",
+      "minimum": 2000,
+      "maximum": 2026,
+      "examples": [2019]
+    },
+    "km_driven": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 300000,
+      "examples": [45000]
+    },
+    "fuel_type": {
+      "type": "string",
+      "enum": ["petrol", "diesel", "cng", "petrol_cng", "petrol_lpg", "electric", "hybrid"],
+      "examples": ["petrol"]
+    },
+    "transmission": {
+      "type": "string",
+      "enum": ["manual", "automatic", "amt"],
+      "examples": ["manual"]
+    },
+    "city": {
+      "type": "string",
+      "minLength": 1,
+      "examples": ["Hyderabad", "Bengaluru", "Mumbai"]
+    },
+    "state": {
+      "type": "string",
+      "default": "unknown",
+      "examples": ["Telangana"]
+    },
+    "ownership": {
+      "oneOf": [
+        {"type": "integer", "minimum": 1, "maximum": 5},
+        {"type": "string"}
+      ],
+      "default": "unknown",
+      "examples": [1]
+    },
+    "registration_code": {
+      "type": "string",
+      "default": "unknown",
+      "examples": ["TS", "KA", "MH"]
+    },
+    "source_context": {
+      "type": "string",
+      "enum": ["market_default", "true_value", "spinny", "mahindra_first_choice"],
+      "default": "market_default",
+      "description": "Trusted-source context used internally because the current model was trained on listing source lineage."
+    },
+    "market_snapshot_year": {
+      "type": "integer",
+      "minimum": 2020,
+      "maximum": 2035,
+      "default": 2026
+    }
+  }
+}

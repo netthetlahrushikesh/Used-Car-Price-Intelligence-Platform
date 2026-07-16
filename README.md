@@ -215,13 +215,30 @@ dataset package is tracked with its recorded `CC0-1.0` metadata. Live scraped
 CSV files are intentionally excluded from Git and should not be redistributed
 publicly unless the relevant source terms permit it.
 
+## Deployment
+
+The prediction API and web UI can be deployed to Vercel as a single Python
+FastAPI function. See
+[docs/68-vercel-deployment.md](docs/68-vercel-deployment.md) for prerequisites,
+CLI and Git setup, smoke checks, rollback, and serverless constraints.
+
+**Live application:**
+[used-car-price-intelligence-platfor.vercel.app](https://used-car-price-intelligence-platfor.vercel.app)
+
+Quick preview (from repo root, with the model package present):
+
+```powershell
+npx vercel@latest
+```
+
 ## Known Limitations
 
 - The target is listed price, not final transaction price.
 - The model is not a production valuation system.
 - Premium/high-price vehicles need a separate improvement track.
 - Rare brand-model rows need more data or fallback logic.
-- Live-market source drift should be monitored before deployment.
+- Live-market source drift must be monitored while interpreting deployed
+  estimates.
 - Self-listed marketplace data is intentionally excluded from the first model.
 
 ## Final Position

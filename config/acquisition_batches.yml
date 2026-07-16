@@ -1,0 +1,1216 @@
+version: 0.1
+created_at: 2026-06-25
+purpose: >
+  Planned acquisition batches for controlled source-city runs. The current
+  CLI writes run manifests for single runs; this file defines the batch jobs
+  a future batch runner should execute.
+
+source_policy:
+  core_dataset: trusted_evaluated_inventory_only
+  include:
+    - spinny
+    - mahindra_first_choice
+    - true_value
+    - honda_auto_terrace
+    - hyundai_promise
+    - toyota_u_trust
+  exclude_from_core_model_training:
+    - olx
+    - quikr
+    - facebook_marketplace
+    - unverified_customer_listed_marketplaces
+  notes: >
+    Core model data should come from platform, dealer, or OEM evaluated inventory,
+    where pricing and condition are reviewed by the platform/dealer rather than
+    directly self-reported by individual customers.
+
+defaults:
+  source: spinny
+  max_pages: 3
+  max_records: 60
+  min_records: 60
+  detail_pages: 60
+  capture_attempts: 4
+  retry_delay_ms: 2000
+  page_scroll_delay_ms: 5000
+  timeout_ms: 60000
+  detail_attempts: 2
+  detail_delay_ms: 3000
+
+batches:
+  - batch_id: spinny_hyderabad_60_detail60
+    source: spinny
+    status: validated
+    city: Hyderabad
+    state: Telangana
+    url: https://www.spinny.com/used-cars-at-hyderabad-forum-sujana-hub-in-hyderabad/s/
+    latest_validated_run_id: run_20260625_spinny_hyderabad_manifest_60_detail60_smoke
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-25/spinny_run_20260625_spinny_hyderabad_manifest_60_detail60_smoke_manifest.json
+
+  - batch_id: mfc_hyderabad_40
+    source: mahindra_first_choice
+    status: validated
+    city: Hyderabad
+    state: Telangana
+    url: https://www.mahindrafirstchoice.com/used-cars/hyderabad
+    max_pages: 2
+    max_records: 40
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+    latest_validated_run_id: run_20260625_mfc_hyderabad_40_smoke
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-25/mahindra_first_choice_run_20260625_mfc_hyderabad_40_smoke_manifest.json
+
+  - batch_id: true_value_hyderabad_40
+    source: true_value
+    status: validated
+    city: Hyderabad
+    state: Telangana
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 17.385044
+    longitude: 78.486671
+    dealer_distance_m: 25000
+    max_pages: 1
+    page_size: 100
+    max_records: 40
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+    latest_validated_run_id: run_20260625_true_value_hyderabad_40_batch_20260625_true_value_execute_check
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-25/true_value_run_20260625_true_value_hyderabad_40_batch_20260625_true_value_execute_check_manifest.json
+
+  - batch_id: spinny_bengaluru_60_detail60
+    source: spinny
+    status: validated
+    city: Bengaluru
+    state: Karnataka
+    locality: Vega City Mall, Bengaluru
+    url: https://www.spinny.com/used-cars-at-bangalore-vega-mall-hub-in-bangalore/s/
+    latest_validated_run_id: run_20260626_spinny_bengaluru_60_detail60_batch_20260626_spinny_bengaluru_hub_detail_execute_v2
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-26/spinny_run_20260626_spinny_bengaluru_60_detail60_batch_20260626_spinny_bengaluru_hub_detail_execute_v2_manifest.json
+
+  - batch_id: spinny_delhi_ncr_60_detail60
+    source: spinny
+    status: validated
+    city: Delhi NCR
+    state: Delhi NCR
+    locality: Dwarka Sector 21, Delhi NCR
+    url: https://www.spinny.com/used-cars-at-delhi-dwarka-sector-21-taj-vivanta-hub-in-delhi-ncr/s/
+    latest_validated_run_id: run_20260626_spinny_delhi_ncr_60_detail60_batch_20260626_spinny_delhi_hub_detail_execute_v2
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-26/spinny_run_20260626_spinny_delhi_ncr_60_detail60_batch_20260626_spinny_delhi_hub_detail_execute_v2_manifest.json
+
+  - batch_id: spinny_mumbai_60_detail60
+    source: spinny
+    status: validated
+    city: Mumbai
+    state: Maharashtra
+    locality: Dadar, Mumbai
+    url: https://www.spinny.com/used-cars-at-mumbai-dadar-hub-in-mumbai/s/
+    latest_validated_run_id: run_20260626_spinny_mumbai_60_detail60_batch_20260626_spinny_mumbai_chennai_hubs_detail_execute
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-26/spinny_run_20260626_spinny_mumbai_60_detail60_batch_20260626_spinny_mumbai_chennai_hubs_detail_execute_manifest.json
+
+  - batch_id: spinny_chennai_60_detail60
+    source: spinny
+    status: validated
+    city: Chennai
+    state: Tamil Nadu
+    locality: Nexus Vijaya Mall, Chennai
+    url: https://www.spinny.com/used-cars-at-chennai-nexus-vijaya-mall-in-chennai/s/
+    latest_validated_run_id: run_20260626_spinny_chennai_60_detail60_batch_20260626_spinny_chennai_hub_detail_execute_v2
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-26/spinny_run_20260626_spinny_chennai_60_detail60_batch_20260626_spinny_chennai_hub_detail_execute_v2_manifest.json
+
+  - batch_id: mfc_bengaluru_80
+    source: mahindra_first_choice
+    status: validated
+    city: Bengaluru
+    state: Karnataka
+    url: https://www.mahindrafirstchoice.com/used-cars/bangalore
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+    latest_validated_run_id: run_20260626_mfc_bengaluru_80_batch_20260626_mfc_5city_execute
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-26/mahindra_first_choice_run_20260626_mfc_bengaluru_80_batch_20260626_mfc_5city_execute_manifest.json
+
+  - batch_id: mfc_delhi_ncr_80
+    source: mahindra_first_choice
+    status: validated
+    city: Delhi NCR
+    state: Delhi NCR
+    url: https://www.mahindrafirstchoice.com/used-cars/delhi
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+    latest_validated_run_id: run_20260626_mfc_delhi_ncr_80_batch_20260626_mfc_5city_execute
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-26/mahindra_first_choice_run_20260626_mfc_delhi_ncr_80_batch_20260626_mfc_5city_execute_manifest.json
+
+  - batch_id: mfc_mumbai_80
+    source: mahindra_first_choice
+    status: validated
+    city: Mumbai
+    state: Maharashtra
+    url: https://www.mahindrafirstchoice.com/used-cars/mumbai
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+    latest_validated_run_id: run_20260626_mfc_mumbai_80_batch_20260626_mfc_5city_execute
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-26/mahindra_first_choice_run_20260626_mfc_mumbai_80_batch_20260626_mfc_5city_execute_manifest.json
+
+  - batch_id: mfc_chennai_80
+    source: mahindra_first_choice
+    status: validated
+    city: Chennai
+    state: Tamil Nadu
+    url: https://www.mahindrafirstchoice.com/used-cars/chennai
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+    latest_validated_run_id: run_20260626_mfc_chennai_80_batch_20260626_mfc_5city_execute
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-26/mahindra_first_choice_run_20260626_mfc_chennai_80_batch_20260626_mfc_5city_execute_manifest.json
+
+  - batch_id: true_value_bengaluru_100
+    source: true_value
+    status: validated
+    city: Bengaluru
+    state: Karnataka
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 12.971599
+    longitude: 77.594566
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 100
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+    latest_validated_run_id: run_20260625_true_value_bengaluru_100_batch_20260625_true_value_5city_fast_execute
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-25/true_value_run_20260625_true_value_bengaluru_100_batch_20260625_true_value_5city_fast_execute_manifest.json
+
+  - batch_id: true_value_delhi_ncr_100
+    source: true_value
+    status: validated
+    city: Delhi NCR
+    state: Delhi NCR
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 28.613939
+    longitude: 77.209021
+    dealer_distance_m: 35000
+    max_pages: 2
+    page_size: 100
+    max_records: 100
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+    latest_validated_run_id: run_20260625_true_value_delhi_ncr_100_batch_20260625_true_value_5city_fast_execute
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-25/true_value_run_20260625_true_value_delhi_ncr_100_batch_20260625_true_value_5city_fast_execute_manifest.json
+
+  - batch_id: true_value_mumbai_100
+    source: true_value
+    status: validated
+    city: Mumbai
+    state: Maharashtra
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 19.075984
+    longitude: 72.877656
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 100
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+    latest_validated_run_id: run_20260625_true_value_mumbai_100_batch_20260625_true_value_5city_fast_execute
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-25/true_value_run_20260625_true_value_mumbai_100_batch_20260625_true_value_5city_fast_execute_manifest.json
+
+  - batch_id: true_value_chennai_100
+    source: true_value
+    status: validated
+    city: Chennai
+    state: Tamil Nadu
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 13.082680
+    longitude: 80.270718
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 100
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+    latest_validated_run_id: run_20260625_true_value_chennai_100_batch_20260625_true_value_5city_fast_execute
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-25/true_value_run_20260625_true_value_chennai_100_batch_20260625_true_value_5city_fast_execute_manifest.json
+
+  - batch_id: true_value_hyderabad_250_expansion
+    source: true_value
+    status: expansion_2500
+    city: Hyderabad
+    state: Telangana
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 17.385044
+    longitude: 78.486671
+    dealer_distance_m: 25000
+    max_pages: 3
+    page_size: 100
+    max_records: 250
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_bengaluru_250_expansion
+    source: true_value
+    status: expansion_2500
+    city: Bengaluru
+    state: Karnataka
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 12.971599
+    longitude: 77.594566
+    dealer_distance_m: 30000
+    max_pages: 3
+    page_size: 100
+    max_records: 250
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_delhi_ncr_700_expansion
+    source: true_value
+    status: expansion_2500
+    city: Delhi NCR
+    state: Delhi NCR
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 28.613939
+    longitude: 77.209021
+    dealer_distance_m: 35000
+    max_pages: 7
+    page_size: 100
+    max_records: 700
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 90
+
+  - batch_id: true_value_mumbai_350_expansion
+    source: true_value
+    status: expansion_2500
+    city: Mumbai
+    state: Maharashtra
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 19.075984
+    longitude: 72.877656
+    dealer_distance_m: 30000
+    max_pages: 4
+    page_size: 100
+    max_records: 350
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 75
+
+  - batch_id: true_value_chennai_120_expansion
+    source: true_value
+    status: expansion_2500
+    city: Chennai
+    state: Tamil Nadu
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 13.082680
+    longitude: 80.270718
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 120
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_pune_150_expansion
+    source: true_value
+    status: expansion_2500
+    city: Pune
+    state: Maharashtra
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 18.520430
+    longitude: 73.856744
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_ahmedabad_150_expansion
+    source: true_value
+    status: expansion_2500
+    city: Ahmedabad
+    state: Gujarat
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 23.022505
+    longitude: 72.571362
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_kolkata_150_expansion
+    source: true_value
+    status: expansion_2500
+    city: Kolkata
+    state: West Bengal
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 22.572646
+    longitude: 88.363895
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_jaipur_150_expansion
+    source: true_value
+    status: expansion_2500
+    city: Jaipur
+    state: Rajasthan
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 26.912434
+    longitude: 75.787271
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_lucknow_150_expansion
+    source: true_value
+    status: expansion_2500
+    city: Lucknow
+    state: Uttar Pradesh
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 26.846694
+    longitude: 80.946166
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_surat_150_gap_close
+    source: true_value
+    status: gap_close_2500
+    city: Surat
+    state: Gujarat
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 21.170240
+    longitude: 72.831061
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_vadodara_150_gap_close
+    source: true_value
+    status: gap_close_2500
+    city: Vadodara
+    state: Gujarat
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 22.307159
+    longitude: 73.181219
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_nashik_150_gap_close
+    source: true_value
+    status: gap_close_2500
+    city: Nashik
+    state: Maharashtra
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 19.997454
+    longitude: 73.789803
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_nagpur_150_gap_close
+    source: true_value
+    status: gap_close_2500
+    city: Nagpur
+    state: Maharashtra
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 21.145800
+    longitude: 79.088155
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_indore_150_gap_close
+    source: true_value
+    status: gap_close_2500
+    city: Indore
+    state: Madhya Pradesh
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 22.719568
+    longitude: 75.857727
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_bhopal_150_gap_close
+    source: true_value
+    status: gap_close_2500
+    city: Bhopal
+    state: Madhya Pradesh
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 23.259933
+    longitude: 77.412615
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_chandigarh_150_gap_close
+    source: true_value
+    status: gap_close_2500
+    city: Chandigarh
+    state: Chandigarh
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 30.733315
+    longitude: 76.779418
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_ludhiana_150_gap_close
+    source: true_value
+    status: gap_close_2500
+    city: Ludhiana
+    state: Punjab
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 30.900965
+    longitude: 75.857276
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_kochi_150_gap_close
+    source: true_value
+    status: gap_close_2500
+    city: Kochi
+    state: Kerala
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 9.931233
+    longitude: 76.267304
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_coimbatore_150_gap_close
+    source: true_value
+    status: gap_close_2500
+    city: Coimbatore
+    state: Tamil Nadu
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 11.016844
+    longitude: 76.955833
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_visakhapatnam_150_gap_close
+    source: true_value
+    status: gap_close_2500
+    city: Visakhapatnam
+    state: Andhra Pradesh
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 17.686816
+    longitude: 83.218482
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_bhubaneswar_150_gap_close
+    source: true_value
+    status: gap_close_2500
+    city: Bhubaneswar
+    state: Odisha
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 20.296059
+    longitude: 85.824540
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_patna_150_gap_close
+    source: true_value
+    status: gap_close_2500
+    city: Patna
+    state: Bihar
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 25.594095
+    longitude: 85.137566
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_guwahati_150_gap_close
+    source: true_value
+    status: gap_close_2500
+    city: Guwahati
+    state: Assam
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 26.144517
+    longitude: 91.736237
+    dealer_distance_m: 30000
+    max_pages: 2
+    page_size: 100
+    max_records: 150
+    min_records: 1
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_mysuru_40_5k_buffer
+    source: true_value
+    status: true_value_5k_buffer
+    city: Mysuru
+    state: Karnataka
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 12.295810
+    longitude: 76.639381
+    dealer_distance_m: 30000
+    max_pages: 1
+    page_size: 100
+    max_records: 40
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_mangaluru_40_5k_buffer
+    source: true_value
+    status: true_value_5k_buffer
+    city: Mangaluru
+    state: Karnataka
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 12.914142
+    longitude: 74.855957
+    dealer_distance_m: 30000
+    max_pages: 1
+    page_size: 100
+    max_records: 40
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_madurai_40_5k_buffer
+    source: true_value
+    status: true_value_5k_buffer
+    city: Madurai
+    state: Tamil Nadu
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 9.925201
+    longitude: 78.119775
+    dealer_distance_m: 30000
+    max_pages: 1
+    page_size: 100
+    max_records: 40
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_vijayawada_40_5k_buffer
+    source: true_value
+    status: true_value_5k_buffer
+    city: Vijayawada
+    state: Andhra Pradesh
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 16.506174
+    longitude: 80.648015
+    dealer_distance_m: 30000
+    max_pages: 1
+    page_size: 100
+    max_records: 40
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: true_value_rajkot_40_5k_buffer
+    source: true_value
+    status: true_value_5k_buffer
+    city: Rajkot
+    state: Gujarat
+    url: https://www.marutisuzukitruevalue.com/buy-car
+    latitude: 22.303894
+    longitude: 70.802160
+    dealer_distance_m: 30000
+    max_pages: 1
+    page_size: 100
+    max_records: 40
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    timeout_seconds: 60
+
+  - batch_id: mfc_pune_80_probe
+    source: mahindra_first_choice
+    status: mfc_5k_probe
+    city: Pune
+    state: Maharashtra
+    url: https://www.mahindrafirstchoice.com/used-cars/pune
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_ahmedabad_80_probe
+    source: mahindra_first_choice
+    status: mfc_5k_probe
+    city: Ahmedabad
+    state: Gujarat
+    url: https://www.mahindrafirstchoice.com/used-cars/ahmedabad
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_kolkata_80_probe
+    source: mahindra_first_choice
+    status: mfc_5k_probe
+    city: Kolkata
+    state: West Bengal
+    url: https://www.mahindrafirstchoice.com/used-cars/kolkata
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_jaipur_80_probe
+    source: mahindra_first_choice
+    status: mfc_5k_probe
+    city: Jaipur
+    state: Rajasthan
+    url: https://www.mahindrafirstchoice.com/used-cars/jaipur
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_lucknow_80_probe
+    source: mahindra_first_choice
+    status: mfc_5k_probe
+    city: Lucknow
+    state: Uttar Pradesh
+    url: https://www.mahindrafirstchoice.com/used-cars/lucknow
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_chandigarh_80_probe
+    source: mahindra_first_choice
+    status: mfc_5k_probe
+    city: Chandigarh
+    state: Chandigarh
+    url: https://www.mahindrafirstchoice.com/used-cars/chandigarh
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_kochi_80_probe
+    source: mahindra_first_choice
+    status: mfc_5k_probe
+    city: Kochi
+    state: Kerala
+    url: https://www.mahindrafirstchoice.com/used-cars/kochi
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_coimbatore_80_probe
+    source: mahindra_first_choice
+    status: mfc_5k_probe
+    city: Coimbatore
+    state: Tamil Nadu
+    url: https://www.mahindrafirstchoice.com/used-cars/coimbatore
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_indore_80_probe
+    source: mahindra_first_choice
+    status: mfc_5k_probe
+    city: Indore
+    state: Madhya Pradesh
+    url: https://www.mahindrafirstchoice.com/used-cars/indore
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_surat_80_probe
+    source: mahindra_first_choice
+    status: mfc_5k_probe
+    city: Surat
+    state: Gujarat
+    url: https://www.mahindrafirstchoice.com/used-cars/surat
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_vadodara_80_probe
+    source: mahindra_first_choice
+    status: mfc_5k_probe
+    city: Vadodara
+    state: Gujarat
+    url: https://www.mahindrafirstchoice.com/used-cars/vadodara
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_nagpur_80_probe
+    source: mahindra_first_choice
+    status: mfc_5k_probe
+    city: Nagpur
+    state: Maharashtra
+    url: https://www.mahindrafirstchoice.com/used-cars/nagpur
+    max_pages: 4
+    max_records: 80
+    min_records: 1
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_bhopal_80_final_try
+    source: mahindra_first_choice
+    status: mfc_final_try
+    city: Bhopal
+    state: Madhya Pradesh
+    url: https://www.mahindrafirstchoice.com/used-cars/bhopal
+    max_pages: 4
+    max_records: 80
+    min_records: 5
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_nashik_80_final_try
+    source: mahindra_first_choice
+    status: mfc_final_try
+    city: Nashik
+    state: Maharashtra
+    url: https://www.mahindrafirstchoice.com/used-cars/nashik
+    max_pages: 4
+    max_records: 80
+    min_records: 5
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_ludhiana_80_final_try
+    source: mahindra_first_choice
+    status: mfc_final_try
+    city: Ludhiana
+    state: Punjab
+    url: https://www.mahindrafirstchoice.com/used-cars/ludhiana
+    max_pages: 4
+    max_records: 80
+    min_records: 5
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_visakhapatnam_80_final_try
+    source: mahindra_first_choice
+    status: mfc_final_try
+    city: Visakhapatnam
+    state: Andhra Pradesh
+    url: https://www.mahindrafirstchoice.com/used-cars/visakhapatnam
+    max_pages: 4
+    max_records: 80
+    min_records: 5
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_bhubaneswar_80_final_try
+    source: mahindra_first_choice
+    status: mfc_final_try
+    city: Bhubaneswar
+    state: Odisha
+    url: https://www.mahindrafirstchoice.com/used-cars/bhubaneswar
+    max_pages: 4
+    max_records: 80
+    min_records: 5
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_patna_80_final_try
+    source: mahindra_first_choice
+    status: mfc_final_try
+    city: Patna
+    state: Bihar
+    url: https://www.mahindrafirstchoice.com/used-cars/patna
+    max_pages: 4
+    max_records: 80
+    min_records: 5
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_guwahati_80_final_try
+    source: mahindra_first_choice
+    status: mfc_final_try
+    city: Guwahati
+    state: Assam
+    url: https://www.mahindrafirstchoice.com/used-cars/guwahati
+    max_pages: 4
+    max_records: 80
+    min_records: 5
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_rajkot_80_final_try
+    source: mahindra_first_choice
+    status: mfc_final_try
+    city: Rajkot
+    state: Gujarat
+    url: https://www.mahindrafirstchoice.com/used-cars/rajkot
+    max_pages: 4
+    max_records: 80
+    min_records: 5
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_vijayawada_80_final_try
+    source: mahindra_first_choice
+    status: mfc_final_try
+    city: Vijayawada
+    state: Andhra Pradesh
+    url: https://www.mahindrafirstchoice.com/used-cars/vijayawada
+    max_pages: 4
+    max_records: 80
+    min_records: 5
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_madurai_80_final_try
+    source: mahindra_first_choice
+    status: mfc_final_try
+    city: Madurai
+    state: Tamil Nadu
+    url: https://www.mahindrafirstchoice.com/used-cars/madurai
+    max_pages: 4
+    max_records: 80
+    min_records: 5
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_mysuru_80_final_try
+    source: mahindra_first_choice
+    status: mfc_final_try
+    city: Mysuru
+    state: Karnataka
+    url: https://www.mahindrafirstchoice.com/used-cars/mysore
+    max_pages: 4
+    max_records: 80
+    min_records: 5
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+  - batch_id: mfc_mangaluru_80_final_try
+    source: mahindra_first_choice
+    status: mfc_final_try
+    city: Mangaluru
+    state: Karnataka
+    url: https://www.mahindrafirstchoice.com/used-cars/mangalore
+    max_pages: 4
+    max_records: 80
+    min_records: 5
+    allow_zero_inventory: true
+    detail_pages: 0
+    capture_attempts: 3
+    retry_delay_ms: 2000
+    page_scroll_delay_ms: 2500
+    timeout_ms: 60000
+
+future_trusted_sources:
+  - source: mahindra_first_choice
+    source_type: dealer_certified
+    priority: 2
+    reason: Multi-brand certified/dealer-evaluated inventory.
+    first_city: Hyderabad
+    status: live_hyderabad_40_validated
+    latest_fixture_run_id: run_20260625_mfc_fixture_cli_check
+    latest_validated_run_id: run_20260625_mfc_hyderabad_40_smoke
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-25/mahindra_first_choice_run_20260625_mfc_hyderabad_40_smoke_manifest.json
+    acquisition_boundary: separate_source_specific_live_flow
+    next_milestone: resumable_batch_runner
+
+  - source: true_value
+    source_type: oem_certified
+    priority: 3
+    reason: OEM-backed evaluated Maruti Suzuki used-car inventory.
+    first_city: Hyderabad
+    status: live_hyderabad_40_validated
+    latest_fixture_run_id: run_20260625_true_value_fixture_cli_check
+    latest_validated_run_id: run_20260625_true_value_hyderabad_40_batch_20260625_true_value_execute_check
+    latest_manifest: data/gold/acquisition_runs/capture_date=2026-06-25/true_value_run_20260625_true_value_hyderabad_40_batch_20260625_true_value_execute_check_manifest.json
+    acquisition_boundary: separate_dealer_discovery_plus_graphql_flow
+    next_milestone: resumable_batch_runner
+
+  - source: honda_auto_terrace
+    source_type: oem_certified
+    priority: 4
+    reason: OEM-backed Honda certified used-car inventory.
+    first_city: Hyderabad
+    status: adapter_not_started

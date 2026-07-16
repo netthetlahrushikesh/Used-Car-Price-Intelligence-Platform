@@ -1,0 +1,174 @@
+version: 0.1
+created_at: 2026-06-26
+purpose: >
+  Scale policy for moving from the 909-row trusted baseline toward a
+  100k-observation used-car price intelligence dataset.
+
+target_definition:
+  target_rows: 100000
+  unit: trusted_listing_observations
+  note: >
+    The target is 100k trusted observations over repeated snapshots, not
+    necessarily 100k unique active cars available on one day.
+
+current_baseline:
+  snapshot_id: snapshot_20260626_trusted_v2_baseline
+  lifecycle_id: listing_lifecycle_v0_20260626
+  collection_id: trusted_collection_v2_20260626
+  trusted_observations: 909
+  unique_listing_keys: 909
+  source_runs: 15
+  sources:
+    spinny: 300
+    true_value: 429
+    mahindra_first_choice: 180
+  cities:
+    - Hyderabad
+    - Bengaluru
+    - Delhi NCR
+    - Mumbai
+    - Chennai
+
+current_progress:
+  snapshot_id: snapshot_20260627_final_spinny_mfc_try
+  lifecycle_id: listing_lifecycle_v7_20260627_final_spinny_mfc_try
+  collection_id: trusted_collection_v9_20260627_final_spinny_mfc_try
+  status: final_for_phase
+  trusted_observations: 3492
+  unique_listing_keys: 3492
+  source_runs: 63
+  listing_source_runs: 59
+  no_inventory_source_runs: 4
+  target_observations_for_current_phase: 5000
+  rows_under_current_phase_target: 1508
+  sources:
+    spinny: 482
+    true_value: 2448
+    mahindra_first_choice: 562
+  phase_exit_decision:
+    decision: proceed_to_dataset_packaging_eda_modeling_reporting
+    no_more_true_value_expansion: true
+    no_more_spinny_mfc_expansion_in_this_phase: true
+  remaining_gap_strategy:
+    strategy_id: remaining_gap_strategy_from_snapshot_20260627_true_value_buffer
+    artifact_json: data/gold/gap_strategy/remaining_5k_gap_strategy_from_true_value_buffer.json
+    decision: superseded_by_final_for_phase_snapshot
+    next_collection_step: none_for_current_phase
+
+readiness_gates_before_high_scale:
+  required:
+    - gate: repeat_equivalent_snapshot
+      status: complete
+      definition: >
+        Run the same source-city scope at least once more, regenerate ledger,
+        lifecycle, and snapshot diff, then review added/removed/still-active
+        counts by source-city.
+    - gate: quality_stability
+      status: required
+      thresholds:
+        required_completeness_avg_min: 1.0
+        high_value_completeness_avg_min: 0.95
+        quarantine_rate_max: 0.01
+    - gate: lifecycle_stability
+      status: required
+      thresholds:
+        automatic_cross_source_merges_allowed: false
+        possible_duplicate_groups_review_required: true
+    - gate: coverage_stability
+      status: required
+      definition: >
+        Missing listings may be interpreted as removed only when the current
+        source-city run has equivalent coverage to the previous snapshot.
+    - gate: resume_and_retry_stability
+      status: in_progress
+      definition: >
+        Batch execution must support resume-from-manifest, skipped passed jobs,
+        and source-specific retry behavior before large runs.
+    - gate: source_run_manifest_governance
+      status: complete
+      definition: >
+        Each promoted acquisition path must write source-run manifests before
+        entering collection ledgers. Standard live-smoke runs and Spinny
+        incremental-detail runs are now covered.
+
+scale_milestones:
+  - milestone: m0_baseline
+    target_observations: 909
+    status: complete
+    goal: Establish trusted baseline and lifecycle identity.
+  - milestone: m1_repeat_snapshot
+    target_observations: 1800
+    status: complete
+    goal: Prove repeated snapshot diffing on the same source-city scope.
+  - milestone: m2_small_scale
+    target_observations: 5000
+    status: final_for_phase_at_3492
+    goal: Expand selected source-city coverage enough to move into dataset packaging and modeling.
+  - milestone: m3_medium_scale
+    target_observations: 25000
+    status: planned
+    goal: Add more trusted cities and repeat collection on a defined cadence.
+  - milestone: m4_high_scale
+    target_observations: 100000
+    status: blocked_until_gates_pass
+    goal: Run automated scheduled snapshots with stable storage and monitoring.
+
+recommended_collection_lanes:
+  true_value:
+    priority: 1
+    reason: Structured OEM-certified inventory and strongest current row yield.
+    worker_type: http_or_api_like_capture
+    max_parallel_source_city_jobs_initial: 3
+    scale_role: first_expand
+    high_scale_notes:
+      - Prefer city/dealer expansion before increasing page pressure.
+      - Keep dealer discovery and listing capture tied to the same snapshot date.
+  mahindra_first_choice:
+    priority: 2
+    reason: Multi-brand dealer-evaluated inventory with different website mechanics.
+    worker_type: browser_capture
+    max_parallel_source_city_jobs_initial: 2
+    scale_role: second_expand
+    high_scale_notes:
+      - Keep MFC separate in orchestration and reporting.
+      - Interpret removed listings carefully because low-inventory cities can be complete with small counts.
+  spinny:
+    priority: 3
+    reason: High-quality evaluated inventory but detail enrichment is slow.
+    worker_type: browser_capture_plus_detail_queue
+    max_parallel_source_city_jobs_initial: 1
+    max_parallel_detail_workers_after_implementation: 2
+    scale_role: quality_anchor
+    incremental_detail_command: spinny-incremental-detail
+    incremental_manifest_command: spinny-incremental-manifest
+    high_scale_notes:
+      - Do not repeatedly refetch detail pages for already-known unchanged listing keys.
+      - Reuse existing detail payloads by normalized listing URL before requesting new detail captures.
+      - Capture missing detail URLs only with an explicit cap.
+      - Promote only manifest-backed incremental outputs into curated ledgers.
+    next_5k_step: paused_current_phase_after_final_spinny_mfc_try
+
+infrastructure_decision:
+  acquisition_recommended:
+    primary: local_or_cloud_vm_worker
+    reason: Stable browser runtime, persistent filesystem, controllable retries, and easier long-running scheduling.
+  kaggle_recommended:
+    primary: analysis_modeling_and_artifact_bridge
+    secondary: small_http_only_experiments
+    not_recommended_for: primary_live_browser_scraping
+    reason: >
+      Kaggle is useful for notebooks, experiments, and dataset versioning, but
+      acquisition needs persistent workers, source-specific throttling, and
+      durable checkpoints.
+  future_cloud_options:
+    - dockerized_vm_with_cron
+    - prefect_or_dagster_orchestration
+    - object_storage_for_raw_bronze_silver_gold
+    - postgres_or_duckdb_for_indexing_and_model_features
+
+stop_conditions:
+  - More than 1 percent of rows are quarantined in a trusted run.
+  - Required pricing fields drop below 100 percent completeness.
+  - A source-city run captures materially fewer records than the previous equivalent snapshot without a source-total explanation.
+  - Login, CAPTCHA, or anti-bot blocking appears.
+  - Listing identity changes cause unexplained duplicate spikes.

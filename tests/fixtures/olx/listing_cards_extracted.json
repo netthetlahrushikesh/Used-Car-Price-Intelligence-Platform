@@ -1,0 +1,180 @@
+{
+  "source": "olx",
+  "source_url": "https://www.olx.in/hyderabad_g4058526/cars_c84",
+  "captured_for": "parser_fixture",
+  "fixture_created_at": "2026-06-24",
+  "records": [
+    {
+      "raw": {
+        "listing_text": "Featured Rs 9,85,000 11 Jun 2024 - 38,000 km Mahindra Bolero Neo Madhapur",
+        "price": "Rs 9,85,000",
+        "title": "2024 Mahindra Bolero Neo",
+        "km": "38,000 km",
+        "locality": "Madhapur",
+        "posted_label": "11 Jun",
+        "fuel": null,
+        "transmission": null
+      },
+      "expected": {
+        "model_year": 2024,
+        "brand": "Mahindra",
+        "model": "Bolero Neo",
+        "listed_price_inr": 985000,
+        "km_driven": 38000
+      }
+    },
+    {
+      "raw": {
+        "listing_text": "Rs 4,25,000 Today 2014 - 71,000 km Maruti Suzuki Swift-Dzire Balkampet",
+        "price": "Rs 4,25,000",
+        "title": "2014 Maruti Suzuki Swift-Dzire",
+        "km": "71,000 km",
+        "locality": "Balkampet",
+        "posted_label": "Today",
+        "fuel": null,
+        "transmission": null
+      },
+      "expected": {
+        "model_year": 2014,
+        "brand": "Maruti Suzuki",
+        "model": "Swift Dzire",
+        "listed_price_inr": 425000,
+        "km_driven": 71000
+      }
+    },
+    {
+      "raw": {
+        "listing_text": "Rs 4,75,000 2022 - 65,000 km Maruti Suzuki Wagon-R-1-0 Balkampet Today",
+        "price": "Rs 4,75,000",
+        "title": "2022 Maruti Suzuki Wagon-R-1-0",
+        "km": "65,000 km",
+        "locality": "Balkampet",
+        "posted_label": "Today",
+        "fuel": null,
+        "transmission": null
+      },
+      "expected": {
+        "model_year": 2022,
+        "brand": "Maruti Suzuki",
+        "model": "Wagon R",
+        "variant": null,
+        "listed_price_inr": 475000,
+        "km_driven": 65000
+      }
+    },
+    {
+      "raw": {
+        "listing_text": "Rs 12,96,000 2021 - 70,000 km MG Hector Plus Madhapur Today",
+        "price": "Rs 12,96,000",
+        "title": "2021 MG Hector Plus",
+        "km": "70,000 km",
+        "locality": "Madhapur",
+        "posted_label": "Today",
+        "fuel": null,
+        "transmission": null
+      },
+      "expected": {
+        "model_year": 2021,
+        "brand": "MG",
+        "model": "Hector Plus",
+        "listed_price_inr": 1296000,
+        "km_driven": 70000
+      }
+    },
+    {
+      "raw": {
+        "listing_text": "Featured Rs 39,50,000 2023 - 8,000 km Mercedes-Benz C-Class Madhapur Today",
+        "price": "Rs 39,50,000",
+        "title": "2023 Mercedes-Benz C-Class",
+        "km": "8,000 km",
+        "locality": "Madhapur",
+        "posted_label": "Today",
+        "fuel": null,
+        "transmission": null
+      },
+      "expected": {
+        "model_year": 2023,
+        "brand": "Mercedes-Benz",
+        "model": "C-Class",
+        "listed_price_inr": 3950000,
+        "km_driven": 8000
+      }
+    },
+    {
+      "raw": {
+        "listing_text": "Rs 8,10,000 2020 - 69,000 km Maruti Suzuki S-Cross1 Mythri Nagar Today",
+        "price": "Rs 8,10,000",
+        "title": "2020 Maruti Suzuki S-Cross",
+        "km": "69,000 km",
+        "locality": "Mythri Nagar",
+        "posted_label": "Today",
+        "fuel": null,
+        "transmission": null
+      },
+      "expected": {
+        "model_year": 2020,
+        "brand": "Maruti Suzuki",
+        "model": "S-Cross",
+        "listed_price_inr": 810000,
+        "km_driven": 69000
+      }
+    },
+    {
+      "raw": {
+        "listing_text": "Rs 7,90,000 2019 - 84,000 km Maruti Suzuki Vitara-Brezza Balkampet 7 Jun",
+        "price": "Rs 7,90,000",
+        "title": "2019 Maruti Suzuki Vitara-Brezza",
+        "km": "84,000 km",
+        "locality": "Balkampet",
+        "posted_label": "7 Jun",
+        "fuel": null,
+        "transmission": null
+      },
+      "expected": {
+        "model_year": 2019,
+        "brand": "Maruti Suzuki",
+        "model": "Vitara Brezza",
+        "listed_price_inr": 790000,
+        "km_driven": 84000
+      }
+    },
+    {
+      "raw": {
+        "listing_text": "Rs 3,03,000 2017 - 67,983 km Nissan Micra Active Megha Hills Today",
+        "price": "Rs 3,03,000",
+        "title": "2017 Nissan Micra Active",
+        "km": "67,983 km",
+        "locality": "Megha Hills",
+        "posted_label": "Today",
+        "fuel": null,
+        "transmission": null
+      },
+      "expected": {
+        "model_year": 2017,
+        "brand": "Nissan",
+        "model": "Micra Active",
+        "listed_price_inr": 303000,
+        "km_driven": 67983
+      }
+    },
+    {
+      "raw": {
+        "listing_text": "Rs 6,67,000 2023 - 5,354 km Renault Kiger Megha Hills Today",
+        "price": "Rs 6,67,000",
+        "title": "2023 Renault Kiger",
+        "km": "5,354 km",
+        "locality": "Megha Hills",
+        "posted_label": "Today",
+        "fuel": null,
+        "transmission": null
+      },
+      "expected": {
+        "model_year": 2023,
+        "brand": "Renault",
+        "model": "Kiger",
+        "listed_price_inr": 667000,
+        "km_driven": 5354
+      }
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+# Local environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.playwright-cli/
+.coverage
+htmlcov/
+node_modules/
+.vercel/
+
+# Secrets
+.env
+.env.*
+!.env.example
+secrets/
+
+# Large datasets and acquisition material (not needed to serve predictions)
+data/
+kaggle_upload/
+memory/
+notebooks/
+config/
+tests/
+scripts/
+docs/
+.playwright-cli/
+
+# Local notes and non-runtime design material
+PROJECT_NOTEBOOK.md
+design-qa.md
+
+# Logs and local process files
+*.log
+*.pid
+*.duckdb
+*.duckdb.wal
+*.db
+*.sqlite
+*.parquet
+*.csv
+*.jsonl
+*.pkl
+
+# Screenshots and notebook plot assets (API static UI assets live under src/)
+docs/assets/
+*.png
+
+# Generated deployment/Grok transcripts. The production model package under
+# artifacts/model/final_price_model_v1/ must remain uploadable.
+artifacts/grok_*
+artifacts/vercel_*

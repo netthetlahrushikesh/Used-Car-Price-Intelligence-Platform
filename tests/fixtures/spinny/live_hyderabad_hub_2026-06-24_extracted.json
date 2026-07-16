@@ -1,0 +1,489 @@
+{
+  "source": "spinny",
+  "source_url": "https://www.spinny.com/used-cars-at-hyderabad-forum-sujana-hub-in-hyderabad/s/",
+  "captured_for": "live_public_search_fixture",
+  "fixture_created_at": "2026-06-24",
+  "capture_method": "public_search_result_text_snapshot",
+  "records": [
+    {
+      "raw": {
+        "title": "2022 Kia Seltos",
+        "price": "14.58 Lakh",
+        "variant": "GTX Plus 1.5 Diesel AT Dual Tone",
+        "emi": "EMI Rs 25,218/m*",
+        "km": "58.5K km",
+        "fuel": "diesel",
+        "transmission": "automatic",
+        "registration": "TS36",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2022,
+        "brand": "Kia",
+        "model": "Seltos",
+        "listed_price_inr": 1458000,
+        "km_driven": 58500,
+        "fuel_type": "diesel",
+        "transmission": "automatic",
+        "registration_code": "TS36",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2022 Mahindra Thar",
+        "price": "11.39 Lakh",
+        "variant": "LX Hard Top Petrol AT 4WD",
+        "emi": "EMI Rs 19,650/m*",
+        "km": "51K km",
+        "fuel": "petrol",
+        "transmission": "automatic",
+        "registration": "TS09",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2022,
+        "brand": "Mahindra",
+        "model": "Thar",
+        "listed_price_inr": 1139000,
+        "km_driven": 51000,
+        "fuel_type": "petrol",
+        "transmission": "automatic",
+        "registration_code": "TS09",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2022 Maruti Brezza",
+        "price": "10.80 Lakh",
+        "variant": "Zxi Plus AT Dual Tone",
+        "emi": "EMI Rs 18,713/m*",
+        "km": "60.5K km",
+        "fuel": "petrol",
+        "transmission": "automatic",
+        "registration": "TS08",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2022,
+        "brand": "Maruti Suzuki",
+        "model": "Brezza",
+        "listed_price_inr": 1080000,
+        "km_driven": 60500,
+        "fuel_type": "petrol",
+        "transmission": "automatic",
+        "registration_code": "TS08",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2023 MG Hector Plus",
+        "price": "16.73 Lakh",
+        "variant": "Sharp Pro 1.5 Turbo Petrol CVT 6 STR",
+        "emi": "EMI Rs 28,847/m*",
+        "km": "34K km",
+        "fuel": "petrol",
+        "transmission": "automatic",
+        "registration": "TS08",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2023,
+        "brand": "MG",
+        "model": "Hector Plus",
+        "listed_price_inr": 1673000,
+        "km_driven": 34000,
+        "fuel_type": "petrol",
+        "transmission": "automatic",
+        "registration_code": "TS08",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2021 Audi A4",
+        "price": "27.82 Lakh",
+        "variant": "Premium Plus 40 TFSI",
+        "emi": "EMI Rs 47,849/m*",
+        "km": "50K km",
+        "fuel": "petrol",
+        "transmission": "automatic",
+        "registration": "TS07",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2021,
+        "brand": "Audi",
+        "model": "A4",
+        "listed_price_inr": 2782000,
+        "km_driven": 50000,
+        "fuel_type": "petrol",
+        "transmission": "automatic",
+        "registration_code": "TS07",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2023 Toyota Innova Hycross",
+        "price": "23.70 Lakh",
+        "variant": "VX Hybrid 7 STR",
+        "emi": "EMI Rs 40,752/m*",
+        "km": "67K km",
+        "fuel": "hybrid",
+        "transmission": "automatic",
+        "registration": "TS15",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2023,
+        "brand": "Toyota",
+        "model": "Innova Hycross",
+        "listed_price_inr": 2370000,
+        "km_driven": 67000,
+        "fuel_type": "hybrid",
+        "transmission": "automatic",
+        "registration_code": "TS15",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2019 Mahindra XUV500",
+        "price": "9.61 Lakh",
+        "variant": "W7",
+        "emi": "EMI Rs 17,425/m*",
+        "km": "68.5K km",
+        "fuel": "diesel",
+        "transmission": "manual",
+        "registration": "TS13",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2019,
+        "brand": "Mahindra",
+        "model": "XUV500",
+        "listed_price_inr": 961000,
+        "km_driven": 68500,
+        "fuel_type": "diesel",
+        "transmission": "manual",
+        "registration_code": "TS13",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2018 Mahindra XUV500",
+        "price": "10.51 Lakh",
+        "variant": "W11 AT",
+        "emi": "EMI Rs 19,212/m*",
+        "km": "101.5K km",
+        "fuel": "diesel",
+        "transmission": "automatic",
+        "registration": "TS07",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2018,
+        "brand": "Mahindra",
+        "model": "XUV500",
+        "listed_price_inr": 1051000,
+        "km_driven": 101500,
+        "fuel_type": "diesel",
+        "transmission": "automatic",
+        "registration_code": "TS07",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2022 Skoda Slavia",
+        "price": "12.12 Lakh",
+        "variant": "Style 1.5L TSI AT",
+        "emi": "EMI Rs 20,975/m*",
+        "km": "78.5K km",
+        "fuel": "petrol",
+        "transmission": "automatic",
+        "registration": "TS08",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2022,
+        "brand": "Skoda",
+        "model": "Slavia",
+        "listed_price_inr": 1212000,
+        "km_driven": 78500,
+        "fuel_type": "petrol",
+        "transmission": "automatic",
+        "registration_code": "TS08",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2022 Volkswagen Taigun",
+        "price": "9.02 Lakh",
+        "variant": "Highline 1.0 TSI MT",
+        "emi": "EMI Rs 15,479/m*",
+        "km": "61.5K km",
+        "fuel": "petrol",
+        "transmission": "manual",
+        "registration": "TS08",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2022,
+        "brand": "Volkswagen",
+        "model": "Taigun",
+        "listed_price_inr": 902000,
+        "km_driven": 61500,
+        "fuel_type": "petrol",
+        "transmission": "manual",
+        "registration_code": "TS08",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2022 Kia Sonet",
+        "price": "10.47 Lakh",
+        "variant": "GTX Plus 1.5 AT",
+        "emi": "EMI Rs 18,150/m*",
+        "km": "97.5K km",
+        "fuel": "diesel",
+        "transmission": "automatic",
+        "registration": "TS07",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2022,
+        "brand": "Kia",
+        "model": "Sonet",
+        "listed_price_inr": 1047000,
+        "km_driven": 97500,
+        "fuel_type": "diesel",
+        "transmission": "automatic",
+        "registration_code": "TS07",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2023 Kia Carens",
+        "price": "14.26 Lakh",
+        "variant": "Luxury Plus 1.5 Diesel AT 7 STR",
+        "emi": "EMI Rs 24,590/m*",
+        "km": "65K km",
+        "fuel": "diesel",
+        "transmission": "automatic",
+        "registration": "TS08",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2023,
+        "brand": "Kia",
+        "model": "Carens",
+        "listed_price_inr": 1426000,
+        "km_driven": 65000,
+        "fuel_type": "diesel",
+        "transmission": "automatic",
+        "registration_code": "TS08",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2023 Kia Carens",
+        "price": "15.66 Lakh",
+        "variant": "Luxury Plus 1.5 Diesel AT 7 STR",
+        "emi": "EMI Rs 27,076/m*",
+        "km": "50K km",
+        "fuel": "diesel",
+        "transmission": "automatic",
+        "registration": "TS12",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2023,
+        "brand": "Kia",
+        "model": "Carens",
+        "listed_price_inr": 1566000,
+        "km_driven": 50000,
+        "fuel_type": "diesel",
+        "transmission": "automatic",
+        "registration_code": "TS12",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2023 Tata Nexon",
+        "price": "11.03 Lakh",
+        "variant": "Fearless Plus S Purple 1.2 Revotron Petrol 6MT Dual Tone",
+        "emi": "EMI Rs 19,038/m*",
+        "km": "10.5K km",
+        "fuel": "petrol",
+        "transmission": "manual",
+        "registration": "AP40",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2023,
+        "brand": "Tata",
+        "model": "Nexon",
+        "listed_price_inr": 1103000,
+        "km_driven": 10500,
+        "fuel_type": "petrol",
+        "transmission": "manual",
+        "registration_code": "AP40",
+        "registration_state": "Andhra Pradesh"
+      }
+    },
+    {
+      "raw": {
+        "title": "2022 Maruti XL6",
+        "price": "9.94 Lakh",
+        "variant": "Zeta MT Petrol",
+        "emi": "EMI Rs 16,995/m*",
+        "km": "47K km",
+        "fuel": "petrol",
+        "transmission": "manual",
+        "registration": "TS15",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2022,
+        "brand": "Maruti Suzuki",
+        "model": "XL6",
+        "listed_price_inr": 994000,
+        "km_driven": 47000,
+        "fuel_type": "petrol",
+        "transmission": "manual",
+        "registration_code": "TS15",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2025 Mercedes GLA",
+        "price": "46.90 Lakh",
+        "variant": "220d 4MATIC",
+        "emi": "EMI Rs 80,659/m*",
+        "km": "4K km",
+        "fuel": "diesel",
+        "transmission": "automatic",
+        "registration": "AP40",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2025,
+        "brand": "Mercedes-Benz",
+        "model": "GLA",
+        "listed_price_inr": 4690000,
+        "km_driven": 4000,
+        "fuel_type": "diesel",
+        "transmission": "automatic",
+        "registration_code": "AP40",
+        "registration_state": "Andhra Pradesh"
+      }
+    },
+    {
+      "raw": {
+        "title": "2022 Tata Nexon",
+        "price": "8.98 Lakh Rs 9.25 Lakh",
+        "variant": "XZA Plus (O) Dual Tone",
+        "emi": "EMI Rs 15,888/m*",
+        "km": "41.5K km",
+        "fuel": "petrol",
+        "transmission": "automatic",
+        "registration": "TS08",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2022,
+        "brand": "Tata",
+        "model": "Nexon",
+        "listed_price_inr": 898000,
+        "km_driven": 41500,
+        "fuel_type": "petrol",
+        "transmission": "automatic",
+        "registration_code": "TS08",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2023 Mahindra XUV700",
+        "price": "18.89 Lakh Rs 19.16 Lakh",
+        "variant": "AX 7 Luxury Pack Diesel AT 7 STR",
+        "emi": "EMI Rs 33,187/m*",
+        "km": "98K km",
+        "fuel": "diesel",
+        "transmission": "automatic",
+        "registration": "TS15",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2023,
+        "brand": "Mahindra",
+        "model": "XUV700",
+        "listed_price_inr": 1889000,
+        "km_driven": 98000,
+        "fuel_type": "diesel",
+        "transmission": "automatic",
+        "registration_code": "TS15",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2023 Hyundai Venue",
+        "price": "10.08 Lakh",
+        "variant": "SX (O) 1.0 Turbo DCT",
+        "emi": "EMI Rs 17,284/m*",
+        "km": "54.5K km",
+        "fuel": "petrol",
+        "transmission": "automatic",
+        "registration": "TS04",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2023,
+        "brand": "Hyundai",
+        "model": "Venue",
+        "listed_price_inr": 1008000,
+        "km_driven": 54500,
+        "fuel_type": "petrol",
+        "transmission": "automatic",
+        "registration_code": "TS04",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2023 Tata Tiago EV",
+        "price": "6.81 Lakh",
+        "variant": "XT Long Range",
+        "emi": "EMI Rs 11,733/m*",
+        "km": "42K km",
+        "fuel": "electric",
+        "transmission": "automatic",
+        "registration": "TS15",
+        "locality": "Nexus Sujana Mall, Kukatpally"
+      },
+      "expected": {
+        "model_year": 2023,
+        "brand": "Tata",
+        "model": "Tiago EV",
+        "listed_price_inr": 681000,
+        "km_driven": 42000,
+        "fuel_type": "electric",
+        "transmission": "automatic",
+        "registration_code": "TS15",
+        "registration_state": "Telangana"
+      }
+    }
+  ]
+}

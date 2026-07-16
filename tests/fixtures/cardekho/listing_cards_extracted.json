@@ -1,0 +1,122 @@
+{
+  "source": "cardekho",
+  "source_url": "https://www.cardekho.com/used-cars+in+hyderabad",
+  "captured_for": "parser_fixture",
+  "fixture_created_at": "2026-06-24",
+  "records": [
+    {
+      "raw": {
+        "title": "Kia Carens 2023",
+        "price": "Rs 15.34L",
+        "km": "17,178 kms",
+        "transmission": "Manual",
+        "fuel": "Diesel",
+        "locality": "Kukatpally, Hyderabad",
+        "deal_rating": "Great Price",
+        "owner_text": "1st owner, 17k km - history looks solid on this Carens.",
+        "inspection_text": "300-point inspection done. Warranty included."
+      },
+      "expected": {
+        "model_year": 2023,
+        "brand": "Kia",
+        "model": "Carens",
+        "listed_price_inr": 1534000,
+        "km_driven": 17178,
+        "fuel_type": "diesel",
+        "transmission": "manual",
+        "ownership": 1
+      }
+    },
+    {
+      "raw": {
+        "title": "Maruti Suzuki Swift 2016",
+        "price": "Rs 4.30L",
+        "km": "40,488 kms",
+        "transmission": "Manual",
+        "fuel": "Petrol",
+        "locality": "Miyapur, Hyderabad",
+        "deal_rating": "Great Price",
+        "owner_text": "2nd owner, 40k km - records look solid on this Swift.",
+        "inspection_text": "300-point inspection done. Warranty included."
+      },
+      "expected": {
+        "model_year": 2016,
+        "brand": "Maruti Suzuki",
+        "model": "Swift",
+        "listed_price_inr": 430000,
+        "km_driven": 40488,
+        "fuel_type": "petrol",
+        "transmission": "manual",
+        "ownership": 2
+      }
+    },
+    {
+      "raw": {
+        "title": "Maruti Suzuki Baleno 2017",
+        "price": "Rs 5.04L",
+        "km": "54,281 kms",
+        "transmission": "Manual",
+        "fuel": "Diesel",
+        "locality": "Dr.b R Ambedkar O.u S.o, Hyderabad",
+        "deal_rating": "Great Price",
+        "owner_text": "1st owner, 54k km - ownership is clean on this Baleno.",
+        "inspection_text": "300-point inspection done. Warranty included."
+      },
+      "expected": {
+        "model_year": 2017,
+        "brand": "Maruti Suzuki",
+        "model": "Baleno",
+        "listed_price_inr": 504000,
+        "km_driven": 54281,
+        "fuel_type": "diesel",
+        "transmission": "manual",
+        "ownership": 1
+      }
+    },
+    {
+      "raw": {
+        "title": "MG Hector 2021",
+        "price": "Rs 13.90L",
+        "km": "57,000 kms",
+        "transmission": "Manual",
+        "fuel": "Diesel",
+        "locality": "Madhapur, Hyderabad",
+        "seller_label": "Direct Owner",
+        "deal_rating": "Great Price",
+        "owner_text": "1st owner, 57k km - records look solid on this Hector."
+      },
+      "expected": {
+        "model_year": 2021,
+        "brand": "MG",
+        "model": "Hector",
+        "listed_price_inr": 1390000,
+        "km_driven": 57000,
+        "fuel_type": "diesel",
+        "transmission": "manual",
+        "ownership": 1
+      }
+    },
+    {
+      "raw": {
+        "title": "Hyundai i20 2018",
+        "price": "Rs 5.75L",
+        "km": "46,500 kms",
+        "transmission": "Manual",
+        "fuel": "Petrol",
+        "locality": "Peerzadiguda, Hyderabad",
+        "deal_rating": "Great Price",
+        "owner_text": "1st owner, 46k km - documents look clean on this i20."
+      },
+      "expected": {
+        "model_year": 2018,
+        "brand": "Hyundai",
+        "model": "i20",
+        "listed_price_inr": 575000,
+        "km_driven": 46500,
+        "fuel_type": "petrol",
+        "transmission": "manual",
+        "ownership": 1
+      }
+    }
+  ]
+}

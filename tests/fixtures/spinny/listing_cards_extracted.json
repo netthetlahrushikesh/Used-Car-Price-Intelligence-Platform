@@ -1,0 +1,128 @@
+{
+  "source": "spinny",
+  "source_url": "https://www.spinny.com/used-cars-in-hyderabad/s/",
+  "captured_for": "parser_fixture",
+  "fixture_created_at": "2026-06-24",
+  "records": [
+    {
+      "raw": {
+        "title": "2016 Honda Jazz",
+        "price": "4.03 Lakh",
+        "variant": "V AT Petrol",
+        "emi": "EMI Rs 7,013/m*",
+        "km": "145.5K km",
+        "fuel": "petrol",
+        "transmission": "automatic",
+        "registration": "TS12",
+        "locality": "DSL Virtue Mall, Uppal"
+      },
+      "expected": {
+        "model_year": 2016,
+        "brand": "Honda",
+        "model": "Jazz",
+        "listed_price_inr": 403000,
+        "km_driven": 145500,
+        "fuel_type": "petrol",
+        "transmission": "automatic",
+        "registration_code": "TS12",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2017 Hyundai Elite i20",
+        "price": "4.79 Lakh",
+        "variant": "Asta 1.2 Dual Tone",
+        "emi": "EMI Rs 8,293/m*",
+        "km": "120.5K km",
+        "fuel": "petrol",
+        "transmission": "manual",
+        "registration": "TS08",
+        "locality": "DSL Virtue Mall, Uppal"
+      },
+      "expected": {
+        "model_year": 2017,
+        "brand": "Hyundai",
+        "model": "Elite i20",
+        "listed_price_inr": 479000,
+        "km_driven": 120500,
+        "fuel_type": "petrol",
+        "transmission": "manual",
+        "registration_code": "TS08",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2014 Skoda Rapid",
+        "price": "4.01 Lakh",
+        "variant": "Elegance 1.6 TDI CR MT",
+        "emi": "EMI Rs 10,487/m*",
+        "km": "97.5K km",
+        "fuel": "diesel",
+        "transmission": "manual",
+        "registration": "TS13",
+        "locality": "DSL Virtue Mall, Uppal"
+      },
+      "expected": {
+        "model_year": 2014,
+        "brand": "Skoda",
+        "model": "Rapid",
+        "listed_price_inr": 401000,
+        "km_driven": 97500,
+        "fuel_type": "diesel",
+        "transmission": "manual",
+        "registration_code": "TS13",
+        "registration_state": "Telangana"
+      }
+    },
+    {
+      "raw": {
+        "title": "2021 Renault Kiger",
+        "price": "5.50 Lakh",
+        "variant": "RXT Turbo CVT Dual Tone",
+        "emi": "EMI Rs 9,485/m*",
+        "km": "64K km",
+        "fuel": "petrol",
+        "transmission": "automatic",
+        "registration": "AP39",
+        "locality": "DSL Virtue Mall, Uppal"
+      },
+      "expected": {
+        "model_year": 2021,
+        "brand": "Renault",
+        "model": "Kiger",
+        "listed_price_inr": 550000,
+        "km_driven": 64000,
+        "fuel_type": "petrol",
+        "transmission": "automatic",
+        "registration_code": "AP39",
+        "registration_state": "Andhra Pradesh"
+      }
+    },
+    {
+      "raw": {
+        "title": "2022 Maruti Vitara Brezza",
+        "price": "8.75 Lakh",
+        "variant": "ZXI Plus Dual Tone",
+        "emi": "EMI Rs 15,036/m*",
+        "km": "40K km",
+        "fuel": "petrol",
+        "transmission": "manual",
+        "registration": "TS09",
+        "locality": "DSL Virtue Mall, Uppal"
+      },
+      "expected": {
+        "model_year": 2022,
+        "brand": "Maruti Suzuki",
+        "model": "Vitara Brezza",
+        "listed_price_inr": 875000,
+        "km_driven": 40000,
+        "fuel_type": "petrol",
+        "transmission": "manual",
+        "registration_code": "TS09",
+        "registration_state": "Telangana"
+      }
+    }
+  ]
+}

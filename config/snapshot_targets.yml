@@ -1,0 +1,243 @@
+version: 0.1
+created_at: 2026-06-26
+purpose: >
+  Snapshot-size targets for scaling toward 100,000 trusted used-car
+  listing observations.
+
+target:
+  target_id: target_100k_trusted_observations_v0
+  target_observations: 100000
+  target_unit: trusted_listing_observations
+  baseline_snapshot: snapshot_20260626_trusted_v2_baseline
+  baseline_observations: 909
+
+current_anchor_snapshot:
+  snapshot_id: snapshot_20260626_2500_target_met
+  snapshot_date: 2026-06-26
+  pricing_ready_observations: 2796
+  target_rows_reached: 2500
+  rows_over_target: 296
+  gap_to_recommended_scale: 2204
+  collection_id: trusted_collection_v5_20260626_2500_target_met
+  lifecycle_id: listing_lifecycle_v3_20260626_2500_target_met
+  source_mix:
+    true_value:
+      pricing_ready: 2317
+      source_runs: 24
+      role: current_volume_lane
+    mahindra_first_choice:
+      pricing_ready: 179
+      source_runs: 5
+      role: underrepresented_multi_brand_lane
+    spinny:
+      pricing_ready: 300
+      source_runs: 5
+      role: quality_anchor_slow_detail_lane
+
+latest_5000_progress_snapshot:
+  snapshot_id: snapshot_20260627_final_spinny_mfc_try
+  snapshot_date: 2026-06-27
+  pricing_ready_observations: 3492
+  target_rows: 5000
+  rows_under_target: 1508
+  status: final_for_phase
+  collection_id: trusted_collection_v9_20260627_final_spinny_mfc_try
+  lifecycle_id: listing_lifecycle_v7_20260627_final_spinny_mfc_try
+  source_mix:
+    true_value:
+      pricing_ready: 2448
+      source_runs: 29
+      role: unchanged_volume_lane_near_allocation
+    mahindra_first_choice:
+      pricing_ready: 562
+      source_runs: 29
+      listing_source_runs: 25
+      no_inventory_source_runs: 4
+      role: final_multi_brand_capacity_evidence_lane
+    spinny:
+      pricing_ready: 482
+      source_runs: 5
+      role: corrected_quality_anchor_incremental_lane
+  phase_exit_decision:
+    decision: proceed_to_dataset_packaging_eda_modeling_reporting
+    no_more_true_value_expansion: true
+    no_more_spinny_mfc_expansion_in_this_phase: true
+    reason: >
+      The final Spinny and MFC attempt improved balance enough for this phase.
+      The remaining 1,508-row gap should not be chased by adding more True
+      Value rows, because source balance and feature quality now matter more
+      than reaching 5,000 immediately.
+  remaining_gap_strategy:
+    strategy_id: remaining_gap_strategy_from_snapshot_20260627_true_value_buffer
+    artifact_json: data/gold/gap_strategy/remaining_5k_gap_strategy_from_true_value_buffer.json
+    artifact_md: data/gold/gap_strategy/remaining_5k_gap_strategy_from_true_value_buffer.md
+    decision: superseded_by_final_for_phase_snapshot
+    next_collection_step: none_for_current_phase
+
+snapshot_size_strategy:
+  next_repeat_snapshot:
+    target_rows: 900
+    acceptable_range:
+      min: 850
+      max: 1200
+    reason: >
+      Repeat the same source-city baseline once to prove lifecycle diffing
+      before expanding scope.
+  small_scale:
+    target_rows: 2500
+    reason: >
+      First expansion level for validating source-city growth and batch
+      stability without jumping straight to high volume.
+  recommended_scale:
+    target_rows: 5000
+    reason: >
+      Best first production target for balancing speed, quality, and source
+      safety. The 2,500-row target is complete and the first MFC 5k probe
+      plus the Spinny incremental-detail promotion and controlled True Value
+      buffer brought the project to 3,278 pricing-ready rows. The final Spinny
+      and MFC attempt then moved the phase-final checkpoint to 3,492 rows.
+      The remaining gap is 1,508 rows, but source balance and clean features
+      matter more than reaching 5,000 immediately.
+  stretch_scale:
+    target_rows: 10000
+    reason: >
+      Use only after the 5k snapshot target is stable. At this rate, the
+      remaining 100k target takes about 10 future snapshots.
+
+recommended_5000_row_source_allocation:
+  true_value:
+    target_rows: 2500
+    current_rows: 2448
+    current_gap: 52
+    share_pct: 50
+    role: volume_lane_near_allocation_unchanged_in_final_try
+    next_action: no_more_true_value_in_current_phase
+  mahindra_first_choice:
+    target_rows: 1500
+    current_rows: 562
+    current_gap: 938
+    share_pct: 30
+    role: multi_brand_expansion_lane
+    next_action: >
+      Final capacity attempt completed. Current public city inventory is useful
+      but uneven; do not assume this lane can reach 1500 rows in one snapshot
+      without additional source paths or repeated snapshots.
+  spinny:
+    target_rows: 1000
+    current_rows: 482
+    current_gap: 518
+    share_pct: 20
+    role: corrected_quality_anchor_with_incremental_detail_enrichment
+    next_action: pause_current_phase_and_move_to_dataset_packaging
+
+next_5000_execution_sequence:
+  - step: mahindra_first_choice_capacity_probe
+    status: completed
+    target: >
+      Test additional MFC city inventory with low row floors. MFC is multi-brand
+      and fast enough per city, but prior evidence shows uneven public inventory.
+    result: >
+      Added 331 pricing-ready rows, increased MFC to 510 rows, and recorded
+      one no-inventory city.
+  - step: spinny_incremental_detail_design
+    status: completed
+    target: >
+      Avoid scaling full-detail Spinny city runs until listing-card capture and
+      detail-page enrichment can be split or cached.
+    result: >
+      Added the `spinny-incremental-detail` command to reuse existing detail
+      payloads by normalized listing URL and capture only explicitly selected
+      missing detail URLs.
+  - step: spinny_incremental_detail_probe
+    status: completed
+    target: >
+      Run an expanded Hyderabad card capture and prove the incremental path can
+      reuse cached details while capturing only capped missing detail pages.
+    result: >
+      Captured 80 listing-card rows, reused 50 cached detail URLs, captured 20
+      new detail pages, produced 80 pricing-ready rows, 0 quarantined rows,
+      100 percent required completeness, and 98.21 percent high-value
+      completeness.
+  - step: spinny_incremental_manifest_integration
+    status: completed
+    target: >
+      Promote incremental Spinny runs into the normal batch and ledger path by
+      creating acquisition-run manifests for card-plus-incremental-detail outputs.
+    result: >
+      Replaced the prior 60-row Spinny Hyderabad source run with the 80-row
+      incremental-detail source manifest. The current 5k progress checkpoint is
+      3,147 pricing-ready rows with 0 quarantine and 1,853 rows remaining.
+  - step: true_value_buffer_gap_close
+    status: completed
+    target: >
+      Use new True Value cities or controlled depth as a buffer only after MFC
+      and Spinny gaps are understood, because True Value is already near its
+      5,000-row allocation.
+    result: >
+      Added five new city runs capped at 40 rows each. The batch added 131
+      pricing-ready rows, 0 quarantined rows, and moved the checkpoint to
+      3,278 pricing-ready rows with 1,722 rows remaining.
+  - step: rebuild_snapshot_artifacts
+    status: completed
+    target: >
+      Rebuild collection ledger, lifecycle index, snapshot diff, and snapshot
+      manifest after each 5k expansion pass.
+    result: >
+      Built `trusted_collection_v8_20260627_true_value_buffer`,
+      `listing_lifecycle_v6_20260627_true_value_buffer`,
+      `snapshot_20260627_true_value_buffer_vs_spinny_incremental_probe`,
+      and `snapshot_20260627_true_value_buffer`.
+  - step: balanced_remaining_5k_gap_strategy
+    status: completed
+    target: >
+      Decide how to close the remaining 1,722 rows without letting True Value
+      dominate further. Consider targeted Spinny incremental expansion,
+      additional MFC source-path research, or repeated snapshot observations.
+    result: >
+      Generated `remaining_gap_strategy_from_snapshot_20260627_true_value_buffer`.
+      The strategy keeps True Value as a final 52-row capped buffer, prioritizes
+      a 200-row Spinny incremental expansion pack, and treats MFC as a
+      source-path discovery lane before assuming public city pages can fill the
+      990-row allocation gap.
+  - step: spinny_incremental_expansion_pack
+    status: completed
+    target: >
+      Expand Spinny beyond the Hyderabad incremental proof by reusing existing
+      detail payloads for non-Hyderabad hub runs, capturing only capped missing
+      detail pages, promoting each completed run through
+      `spinny-incremental-manifest`, and rebuilding v9 snapshot artifacts.
+    result: >
+      Replaced all five Spinny hub manifests with final incremental runs:
+      Bengaluru 95, Chennai 100, Delhi NCR 100, Hyderabad 100, and Mumbai 87
+      pricing-ready rows. Corrected price-like variant recovery and explicit
+      city/state regeneration before finalizing.
+  - step: mahindra_first_choice_final_capacity_try
+    status: completed
+    target: >
+      Make one final MFC public city-page capacity attempt without assuming the
+      source can fill the full 1,500-row allocation in this phase.
+    result: >
+      Added 52 pricing-ready rows, 0 quarantined rows, and 3 no-inventory cities.
+      MFC now has 562 pricing-ready rows across 29 source runs.
+  - step: final_for_phase_snapshot
+    status: completed
+    target: >
+      Rebuild the ledger, lifecycle index, snapshot diff, snapshot manifest, and
+      100k projection after the final Spinny/MFC attempt.
+    result: >
+      Built `snapshot_20260627_final_spinny_mfc_try` with 3,492 pricing-ready
+      rows, 0 quarantine, and status `final_for_phase`.
+  - step: dataset_packaging_eda_modeling
+    status: next
+    target: >
+      Package the curated pricing-ready rows, produce EDA, and train a simple
+      baseline pricing model before adding API or dashboard work.
+
+go_to_100k_when:
+  - repeat_same_scope_snapshot_passes
+  - snapshot_diff_counts_are_explainable
+  - required_completeness_is_100_percent
+  - quarantine_rate_is_at_or_below_1_percent
+  - source_city_coverage_is_stable
+  - bounded_parallel_execution_is_source_aware
+  - storage_plan_exists_for_repeated_snapshots

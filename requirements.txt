@@ -1,0 +1,10 @@
+# Production runtime for the Vercel FastAPI deployment.
+# Keep notebook, acquisition, and training-only packages out of this file.
+# scikit-learn is pinned exactly to match the serialized final_price_model_v1 artifact.
+fastapi>=0.115,<1
+pydantic>=2.7,<3
+joblib>=1.3,<2
+numpy>=1.26,<3
+pandas>=2.0,<3
+pyyaml>=6.0
+scikit-learn==1.8.0

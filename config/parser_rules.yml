@@ -1,0 +1,388 @@
+version: 0.1
+created_at: 2026-06-24
+purpose: >
+  Machine-readable parser rules for normalizing used-car listing text into
+  canonical schema fields.
+
+null_tokens:
+  - ""
+  - " "
+  - "-"
+  - "--"
+  - "NA"
+  - "N/A"
+  - "Not Available"
+  - "null"
+  - "None"
+  - "Call for price"
+  - "Ask for price"
+
+price:
+  currency_tokens:
+    - rs
+    - rs.
+    - inr
+    - rupee
+    - rupees
+  units:
+    k: 1000
+    thousand: 1000
+    l: 100000
+    lac: 100000
+    lacs: 100000
+    lakh: 100000
+    lakhs: 100000
+    cr: 10000000
+    crore: 10000000
+    crores: 10000000
+  minimum_soft_price_inr: 50000
+  maximum_soft_price_inr: 50000000
+  multiple_candidate_strategy: first_visible_candidate
+  warning_codes:
+    - missing_price
+    - multiple_price_candidates
+    - price_below_soft_minimum
+    - price_above_soft_maximum
+    - price_text_contains_emi
+    - price_text_contains_extra_charges
+
+kilometers:
+  distance_tokens:
+    - km
+    - kms
+    - kilometer
+    - kilometers
+    - driven
+  units:
+    k: 1000
+    thousand: 1000
+  minimum_km: 0
+  maximum_soft_km: 300000
+  maximum_hard_km: 500000
+  warning_codes:
+    - missing_km
+    - km_above_soft_maximum
+    - km_above_hard_maximum
+    - ambiguous_km_text
+
+ownership:
+  values:
+    1:
+      - "1"
+      - "1st"
+      - first
+      - single
+      - one
+    2:
+      - "2"
+      - "2nd"
+      - second
+      - two
+    3:
+      - "3"
+      - "3rd"
+      - third
+      - three
+    4:
+      - "4"
+      - "4th"
+      - fourth
+      - four
+    5:
+      - "5"
+      - "5th"
+      - fifth
+      - five
+  context_tokens:
+    - owner
+    - owners
+  seller_context_only:
+    - direct owner
+    - individual seller
+  warning_codes:
+    - missing_ownership
+    - ambiguous_ownership_text
+    - owner_text_is_seller_type_not_owner_count
+
+fuel_type:
+  allowed_values:
+    - petrol
+    - diesel
+    - cng
+    - petrol_cng
+    - petrol_lpg
+    - electric
+    - hybrid
+    - lpg
+    - unknown
+  synonyms:
+    petrol:
+      - petrol
+      - gasoline
+    diesel:
+      - diesel
+    cng:
+      - cng
+    petrol_cng:
+      - petrol cng
+      - petrol + cng
+      - petrol/cng
+      - cng petrol
+      - cng + petrol
+    petrol_lpg:
+      - petrol lpg
+      - petrol + lpg
+      - petrol/lpg
+      - lpg petrol
+      - lpg + petrol
+    electric:
+      - electric
+      - ev
+    hybrid:
+      - hybrid
+      - petrol hybrid
+      - strong hybrid
+      - mild hybrid
+    lpg:
+      - lpg
+  warning_codes:
+    - missing_fuel_type
+    - unknown_fuel_type
+    - multiple_fuel_candidates
+
+transmission:
+  allowed_values:
+    - manual
+    - automatic
+    - amt
+    - imt
+    - cvt
+    - ivt
+    - dct
+    - unknown
+  synonyms:
+    manual:
+      - manual
+      - mt
+    automatic:
+      - automatic
+      - auto
+      - at
+    amt:
+      - amt
+      - automated manual
+    imt:
+      - imt
+      - intelligent manual
+    cvt:
+      - cvt
+    ivt:
+      - ivt
+      - intelligent variable
+    dct:
+      - dct
+      - dsg
+  warning_codes:
+    - missing_transmission
+    - unknown_transmission
+    - multiple_transmission_candidates
+
+registration:
+  state_prefixes:
+    AP: Andhra Pradesh
+    AR: Arunachal Pradesh
+    AS: Assam
+    BR: Bihar
+    CG: Chhattisgarh
+    CH: Chandigarh
+    DD: Daman and Diu
+    DL: Delhi
+    DN: Dadra and Nagar Haveli
+    GA: Goa
+    GJ: Gujarat
+    HR: Haryana
+    HP: Himachal Pradesh
+    JH: Jharkhand
+    JK: Jammu and Kashmir
+    KA: Karnataka
+    KL: Kerala
+    LA: Ladakh
+    LD: Lakshadweep
+    MH: Maharashtra
+    ML: Meghalaya
+    MN: Manipur
+    MP: Madhya Pradesh
+    MZ: Mizoram
+    NL: Nagaland
+    OD: Odisha
+    PB: Punjab
+    PY: Puducherry
+    RJ: Rajasthan
+    SK: Sikkim
+    TN: Tamil Nadu
+    TR: Tripura
+    TS: Telangana
+    TG: Telangana
+    UK: Uttarakhand
+    UP: Uttar Pradesh
+    WB: West Bengal
+  warning_codes:
+    - missing_registration
+    - registration_state_only
+    - unknown_registration_prefix
+    - ambiguous_registration_text
+    - bharat_series_registration
+
+title:
+  model_year_min: 1990
+  model_year_max_offset: 1
+  known_brands:
+    - Maruti Suzuki
+    - Maruti
+    - Mercedes-Benz
+    - Mercedes Benz
+    - Volkswagen
+    - Mahindra
+    - Hyundai
+    - Toyota
+    - Renault
+    - Nissan
+    - Honda
+    - Skoda
+    - Tata
+    - Ford
+    - Kia
+    - MG
+    - BMW
+    - Audi
+    - Jeep
+    - Volvo
+    - Isuzu
+    - Datsun
+    - Fiat
+    - Chevrolet
+    - Mitsubishi
+    - Citroen
+    - Mini
+  starter_known_models_by_brand:
+    Honda:
+      - Jazz
+      - City
+      - Amaze
+      - BR-V
+    Hyundai:
+      - Elite i20
+      - i20
+      - Venue
+      - Xcent
+      - Creta
+      - Grand i10
+    Kia:
+      - Carens
+      - Seltos
+    Mahindra:
+      - Bolero Neo
+      - XUV500
+      - Thar
+    Maruti Suzuki:
+      - Alto K10
+      - Alto 800
+      - Alto
+      - Baleno
+      - Celerio
+      - Ciaz
+      - Eeco
+      - Ertiga
+      - Fronx
+      - Grand Vitara
+      - Ignis
+      - Omni
+      - Ritz
+      - S-Presso
+      - S-Cross
+      - Swift Dzire
+      - Swift
+      - SX4
+      - Vitara Brezza
+      - Wagon R
+      - XL6
+    Mercedes-Benz:
+      - C-Class
+      - GLA Class
+      - GLA
+    MG:
+      - Hector Plus
+      - Hector
+    Nissan:
+      - Micra Active
+      - Micra
+    Renault:
+      - Kiger
+      - Kwid
+    Skoda:
+      - Rapid
+    Tata:
+      - Tigor EV
+      - Tigor
+    Volkswagen:
+      - Polo
+      - Vento
+    Mini:
+      - Countryman
+    Volvo:
+      - S80
+  warning_codes:
+    - missing_title
+    - missing_model_year
+    - unknown_brand
+    - unknown_model
+    - variant_inferred
+    - multiple_year_candidates
+
+seller_type:
+  allowed_values:
+    - platform
+    - dealer
+    - individual
+    - oem_certified
+    - unknown
+  synonyms:
+    platform:
+      - platform
+      - company owned
+      - stock owned
+    dealer:
+      - dealer
+      - dealership
+      - car dealer
+    individual:
+      - individual
+      - owner
+      - direct owner
+      - private seller
+    oem_certified:
+      - certified
+      - true value
+      - hyundai promise
+      - auto terrace
+      - u trust
+
+availability:
+  false_tokens:
+    - sold
+    - unavailable
+    - booked
+    - reserved
+  true_tokens:
+    - available
+    - in stock
+    - active
+
+completeness:
+  overall_weights:
+    required: 0.70
+    high_value: 0.20
+    optional: 0.10
+  gold_min_parse_confidence: 0.90
+  excellent_source_pricing_ready_rate: 0.90
+  usable_source_pricing_ready_rate: 0.75

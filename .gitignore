@@ -10,6 +10,9 @@ __pycache__/
 .coverage
 htmlcov/
 
+# Node/frontend tooling
+node_modules/
+
 # Virtual environments
 .venv/
 venv/
@@ -47,6 +50,11 @@ notebooks/used_car_price_intelligence_gradient_boosting_modeling.*
 notebooks/used_car_price_intelligence_log_price_modeling.*
 
 # Local databases and artifacts
+# Keep the production model package trackable for Vercel/Git deploys; ignore the rest.
+artifacts/*
+!artifacts/model/
+!artifacts/model/final_price_model_v1/
+!artifacts/model/final_price_model_v1/**
 *.duckdb
 *.duckdb.wal
 *.db
@@ -56,6 +64,7 @@ notebooks/used_car_price_intelligence_log_price_modeling.*
 *.jsonl
 *.log
 *.joblib
+!artifacts/model/final_price_model_v1/*.joblib
 *.pkl
 memory/
 
@@ -64,3 +73,8 @@ memory/
 Thumbs.db
 .vscode/
 .idea/
+
+.vercel
+.env
+.env.*
+!.env.example
