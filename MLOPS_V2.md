@@ -76,3 +76,7 @@ python scripts/drift_report.py
 - New unit tests: **8 passed** (`test_prediction_logging.py`, `test_drift_report.py`).
 - Existing API/Vercel tests still green (15 passed in that subset).
 - `docker` binary was **not installed** on the agent box (`docker: command not found`); Dockerfile and compose are ready — run `docker build` / `docker compose up --build` on a machine with Docker.
+
+## Local monitoring
+
+- Run `.venv/bin/python scripts/drift_report.py`; the local report is at `reports/drift_report.md` (ignored and not committed).
