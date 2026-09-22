@@ -1,49 +1,41 @@
 # Used Car Price Intelligence Platform
 
-A data-first used-car pricing project built from trusted Indian used-car listing
-sources. The project turns messy multi-source inventory data into modeling-ready
-datasets, validates quality, trains pricing baselines, and documents the final
-model with stability and interpretation evidence.
+Predicts the **listed asking price** of used cars in India from trusted inventory
+sources — not a dealer quote, not a final transaction price, and not a production
+valuation system. It is a portfolio-grade data → model → API platform: trusted
+listings in, transparent estimates and documented limits out.
 
-This is a new project, separate from the older single-page scraping notebook.
-The older work proved the basic idea; this repository rebuilds it as a more
-production-oriented data and modeling platform.
-
-## What This Project Answers
-
-- What is the expected listed price for a used car?
-- Which listings are likely overpriced or underpriced?
-- How do price patterns vary by city, brand, model, year, fuel type,
-  transmission, ownership, source, and kilometers driven?
-- Which data sources are reliable enough for modeling?
-- Where does the model work well, and where does it still need improvement?
-
-## Final Result
-
-Final candidate:
-
-| Model | Dataset | MAE | MAPE | R2 |
-| --- | --- | ---: | ---: | ---: |
-| Combined Trusted Lineage Target-Encoded Native HGB | Combined Trusted Modeling Dataset | 47,389 INR | 9.88% | 0.897 |
-
-Repeated-split validation:
-
-| Metric | Value |
-| --- | ---: |
-| Validation runs | 7 |
-| Mean MAPE | 10.33% |
-| MAPE range | 9.88% to 10.73% |
-| Mean MAE | 47,589 INR |
-| Mean R2 | 0.906 |
-
-Correct claim:
+**Live demo:**
+[https://used-car-price-intelligence-platfor.vercel.app](https://used-car-price-intelligence-platfor.vercel.app)
 
 > Built a trusted-source used-car price intelligence pipeline and trained a
 > 10%-class price model, reaching 9.88% MAPE on the primary combined split and
 > 10.33% mean MAPE across repeated validation splits.
 
-Do not claim guaranteed sub-10% MAPE across every split. Premium/high-price
-cars and rare brand-model groups remain harder than common normal-market cars.
+**Holdout (combined trusted, 9,110 rows):** MAPE **9.88%** · R² **0.897** · MAE **47,389 INR**
+
+Repeated splits: mean MAPE **10.33%** (range 9.88–10.73). Do not claim guaranteed
+sub-10% MAPE on every split — premium/high-price and rare brand-model groups remain harder.
+
+- **Trusted data** — evaluated inventory sources and lineage features, not noisy self-listed marketplace dumps
+- **Model journey** — baselines → log-price / premium-aware boosting → target-encoded native HGB at 9.88% MAPE, with repeated-split stability checks
+- **Shipped API / UI / MLOps** — FastAPI + web UI on Vercel; MLOps v2 adds Docker, GitHub Actions CI, prediction JSONL logging, and a drift report ([MLOPS_V2.md](MLOPS_V2.md), [docs/70-mlops-v2.md](docs/70-mlops-v2.md))
+
+## How it was built
+
+- Multi-source acquisition, canonical schema, quality gates, and deduped modeling sets (9,110-row combined trusted dataset)
+- Iterative modeling with holdout metrics, segment error analysis, and interpretation (permutation importance)
+- Repeated-split validation (mean MAPE 10.33%) so the headline number is not a one-split fluke
+- Prediction API and web UI deployed to Vercel
+- MLOps v2 packaging: Docker / Compose, CI, prediction logs, and scripted drift reporting
+
+## Reading path
+
+1. **[Live demo](https://used-car-price-intelligence-platfor.vercel.app)** — try a prediction
+2. **This README** — claims, metrics, evidence charts below
+3. **[Final Model Card](docs/61-final-model-card.md)** — scope, limits, how to talk about the model
+4. **[Complete Modeling Story Notebook](notebooks/used_car_price_intelligence_complete_modeling_story.ipynb)** — end-to-end modeling narrative
+5. **[MLOPS_V2.md](MLOPS_V2.md)** — Docker, CI, prediction JSONL, drift report
 
 ## Model Evidence
 
@@ -87,10 +79,10 @@ Important distinction:
 The 103k observation file is useful for data collection and lifecycle analysis.
 It is not the supervised training dataset.
 
-## Reading Path
+## Decision log (archive)
 
-For a GitHub, portfolio, interview, Medium, LinkedIn, or YouTube review, read in
-this order:
+Longer design notes, collection runbooks, and review docs live under
+[docs/](docs/README.md). Useful deep dives if you want the full trail:
 
 1. [Final GitHub Package](docs/60-final-github-package.md)
 2. [Final Model Card](docs/61-final-model-card.md)
@@ -100,17 +92,18 @@ this order:
 6. [Model Interpretation Notebook](notebooks/used_car_price_intelligence_model_interpretation.ipynb)
 7. [Model Stability Validation Notebook](notebooks/used_car_price_intelligence_model_stability_validation.ipynb)
 
-The full decision log remains in [docs/](docs/README.md).
-
 ## Repository Structure
 
 ```text
 config/          Source registry, parser rules, batch targets, scale policy
-docs/            Decision log, final package summary, model card, assets
+docs/            Decision log, model card, MLOps notes, assets
 kaggle_upload/   Local Kaggle dataset package metadata and upload notes
 notebooks/       EDA, modeling, interpretation, validation notebooks
-src/             Acquisition, parsing, quality, reporting, and packaging code
+scripts/         Drift report, API runners, smoke / export helpers
+src/             Acquisition, parsing, quality, modeling, and api/ (FastAPI + static UI)
 tests/           Unit tests and source fixtures
+artifacts/       Model package and monitoring reference stats
+reports/         Generated drift report and related outputs
 ```
 
 ## Core Pipeline
