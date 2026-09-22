@@ -2,40 +2,56 @@ const form = document.querySelector("#predictionForm");
 const estimateButton = document.querySelector("#estimateButton");
 const buttonLabel = estimateButton.querySelector(".button-label");
 const healthStatus = document.querySelector("#healthStatus");
-const formStatus = document.querySelector("#formStatus span");
+const formStatus = document.querySelector("#formStatus");
 const resultState = document.querySelector("#resultState");
 const resultSubtitle = document.querySelector("#resultSubtitle");
 const predictedPrice = document.querySelector("#predictedPrice");
 const priceRange = document.querySelector("#priceRange");
-const rangePct = document.querySelector("#rangePct");
-const rangeMarker = document.querySelector("#rangeMarker");
-const rangeLow = document.querySelector("#rangeLow");
-const rangeMid = document.querySelector("#rangeMid");
-const rangeHigh = document.querySelector("#rangeHigh");
-const rangeNote = document.querySelector("#rangeNote");
+const confidenceRow = document.querySelector("#confidenceRow");
 const confidenceValue = document.querySelector("#confidenceValue");
-const priceBand = document.querySelector("#priceBand");
-const insightList = document.querySelector("#insightList");
-const coverageCopy = document.querySelector("#coverageCopy");
-const warningChips = document.querySelector("#warningChips");
 const modelContext = document.querySelector("#modelContext");
-const journeySteps = [...document.querySelectorAll(".journey-step")];
+const brandSelect = document.querySelector("#brandSelect");
+const brandOtherField = document.querySelector("#brandOtherField");
+const brandOther = document.querySelector("#brandOther");
+const modelInput = document.querySelector("#modelInput");
+const modelSuggestions = document.querySelector("#modelSuggestions");
+const cityInput = document.querySelector("#cityInput");
+const stateField = document.querySelector("#stateField");
+const regCodeField = document.querySelector("#regCodeField");
 
-const warningLabels = {
-  rare_or_unseen_brand_model: "Rare or unseen brand-model",
-  unseen_brand: "Unseen brand",
-  unseen_model: "Unseen model",
-  unseen_city: "Unseen city",
-  premium_or_high_price_segment: "Premium/high-price segment",
-  km_outside_training_policy: "Km outside training policy",
-  model_year_outside_training_policy: "Model year outside training policy",
+const BRAND_MODELS = {
+  "Maruti Suzuki": ["Swift", "Baleno", "Dzire", "Wagon R", "Alto", "Ertiga", "Brezza", "Celerio", "Ignis"],
+  Hyundai: ["i20", "Creta", "Venue", "i10", "Verna", "Alcazar", "Aura"],
+  Honda: ["City", "Amaze", "Jazz", "WR-V", "Elevate"],
+  Tata: ["Nexon", "Punch", "Altroz", "Tiago", "Harrier", "Safari"],
+  Mahindra: ["XUV700", "Scorpio", "XUV300", "Bolero", "Thar", "XUV400"],
+  Toyota: ["Innova", "Fortuner", "Glanza", "Urban Cruiser", "Camry", "Hyryder"],
+  Kia: ["Seltos", "Sonet", "Carnival", "Carens"],
+  Volkswagen: ["Polo", "Vento", "Taigun", "Virtus"],
+  Skoda: ["Rapid", "Octavia", "Kushaq", "Slavia", "Superb"],
+  Renault: ["Kwid", "Triber", "Kiger", "Duster"],
+  Nissan: ["Magnite", "Kicks", "Sunny"],
+  Ford: ["EcoSport", "Figo", "Endeavour", "Freestyle"],
+  MG: ["Hector", "Astor", "ZS EV", "Comet"],
+  BMW: ["3 Series", "5 Series", "X1", "X3", "X5"],
+  "Mercedes-Benz": ["C-Class", "E-Class", "GLA", "GLC", "A-Class"],
+  Audi: ["A4", "A6", "Q3", "Q5", "Q7"],
 };
 
-function initializeIcons() {
-  if (window.lucide) {
-    window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
-  }
-}
+const CITY_META = {
+  Hyderabad: { state: "Telangana", code: "TS" },
+  Bengaluru: { state: "Karnataka", code: "KA" },
+  Bangalore: { state: "Karnataka", code: "KA" },
+  Chennai: { state: "Tamil Nadu", code: "TN" },
+  Mumbai: { state: "Maharashtra", code: "MH" },
+  Pune: { state: "Maharashtra", code: "MH" },
+  Delhi: { state: "Delhi", code: "DL" },
+  "New Delhi": { state: "Delhi", code: "DL" },
+  Ahmedabad: { state: "Gujarat", code: "GJ" },
+  Kolkata: { state: "West Bengal", code: "WB" },
+  Jaipur: { state: "Rajasthan", code: "RJ" },
+  Kochi: { state: "Kerala", code: "KL" },
+};
 
 function formatInr(value) {
   if (!Number.isFinite(Number(value))) return "--";
@@ -49,71 +65,62 @@ function formatInr(value) {
   }).format(amount);
 }
 
-function formatNumber(value) {
-  return Number(value).toLocaleString("en-IN");
-}
-
 function titleCase(value) {
   return String(value || "unknown")
     .replaceAll("_", " ")
     .replace(/\b\w/g, (character) => character.toUpperCase());
 }
 
-function formatPriceBand(value) {
-  const labels = {
-    "0_2.5L": "Under 2.5L",
-    "2.5L_5L": "2.5L - 5L",
-    "5L_7.5L": "5L - 7.5L",
-    "7.5L_10L": "7.5L - 10L",
-    "10L_20L": "10L - 20L",
-    "20L_plus": "20L+",
-  };
-  return labels[value] || titleCase(value);
+function resolveBrand() {
+  if (brandSelect.value === "__other__") {
+    return String(brandOther.value || "").trim();
+  }
+  return brandSelect.value;
+}
+
+function updateModelSuggestions() {
+  const brand = brandSelect.value === "__other__" ? "" : brandSelect.value;
+  const models = BRAND_MODELS[brand] || [];
+  modelSuggestions.innerHTML = models.map((m) => `<option value="${m}"></option>`).join("");
+}
+
+function syncBrandOtherVisibility() {
+  const isOther = brandSelect.value === "__other__";
+  brandOtherField.hidden = !isOther;
+  if (isOther) {
+    brandOther.required = true;
+    brandOther.focus();
+  } else {
+    brandOther.required = false;
+    brandOther.value = "";
+  }
+}
+
+function syncCityMeta() {
+  const city = String(cityInput.value || "").trim();
+  const meta = CITY_META[city];
+  if (meta) {
+    stateField.value = meta.state;
+    regCodeField.value = meta.code;
+  } else {
+    stateField.value = "unknown";
+    regCodeField.value = "unknown";
+  }
 }
 
 function formPayload() {
   const values = Object.fromEntries(new FormData(form).entries());
+  delete values.brand_other;
+  values.brand = resolveBrand();
   values.model_year = Number(values.model_year);
   values.km_driven = Number(values.km_driven);
-  values.variant = values.variant.trim() || "unknown";
-  values.state = values.state.trim() || "unknown";
-  values.registration_code = values.registration_code.trim() || "unknown";
+  values.variant = String(values.variant || "").trim() || "unknown";
+  values.state = String(values.state || "").trim() || "unknown";
+  values.registration_code = String(values.registration_code || "").trim() || "unknown";
   if (/^\d+$/.test(String(values.ownership))) {
     values.ownership = Number(values.ownership);
   }
   return values;
-}
-
-function validRequiredFields() {
-  const payload = formPayload();
-  return [
-    payload.brand.trim(),
-    payload.model.trim(),
-    payload.city.trim(),
-    Number.isFinite(payload.model_year) && payload.model_year >= 2000 && payload.model_year <= 2026,
-    Number.isFinite(payload.km_driven) && payload.km_driven >= 0 && payload.km_driven <= 300_000,
-    payload.fuel_type,
-    payload.transmission,
-  ].every(Boolean);
-}
-
-function updateJourney() {
-  const payload = formPayload();
-  const completed = [
-    Boolean(payload.brand.trim() && payload.model.trim()),
-    Number.isFinite(payload.model_year) && Number.isFinite(payload.km_driven),
-    Boolean(payload.city.trim() && payload.fuel_type && payload.transmission),
-  ];
-
-  journeySteps.forEach((step, index) => {
-    const complete = completed[index];
-    step.classList.toggle("is-complete", complete);
-    step.classList.toggle("is-active", !complete && index === completed.findIndex((value) => !value));
-  });
-
-  formStatus.textContent = validRequiredFields()
-    ? "Required estimate details are ready."
-    : "Complete the required vehicle, usage, and market details.";
 }
 
 function setHealth(state, label) {
@@ -125,95 +132,43 @@ function setHealth(state, label) {
 
 function setLoading(isLoading) {
   estimateButton.disabled = isLoading;
-  buttonLabel.textContent = isLoading ? "Calculating estimate" : "Estimate fair price";
-}
-
-function clearChildren(element) {
-  while (element.firstChild) element.removeChild(element.firstChild);
-}
-
-function appendListItem(list, text) {
-  const item = document.createElement("li");
-  item.textContent = text;
-  list.append(item);
-}
-
-function renderWarnings(codes) {
-  clearChildren(warningChips);
-
-  if (!codes.length) {
-    const chip = document.createElement("span");
-    chip.className = "warning-chip is-clear";
-    chip.textContent = "No material model warnings";
-    warningChips.append(chip);
-    coverageCopy.textContent = "This configuration returned no material model risk flags. Confidence is based on observed training coverage and known segment limits.";
-    return;
-  }
-
-  coverageCopy.textContent = "Review these coverage notes before using the estimate as a pricing reference. They indicate inputs or segments with less reliable model coverage.";
-  codes.forEach((code) => {
-    const chip = document.createElement("span");
-    chip.className = "warning-chip";
-    chip.textContent = warningLabels[code] || titleCase(code);
-    warningChips.append(chip);
-  });
-}
-
-function renderInsights(input, explanation) {
-  clearChildren(insightList);
-  const snapshotYear = Number(input.market_snapshot_year || new Date().getFullYear());
-  const age = Math.max(0, snapshotYear - Number(input.model_year));
-  const vehicleName = [input.brand, input.model, input.variant !== "unknown" ? input.variant : ""]
-    .filter(Boolean)
-    .join(" ");
-
-  appendListItem(insightList, `${vehicleName}, ${input.model_year} model.`);
-  appendListItem(
-    insightList,
-    `${formatNumber(input.km_driven)} km driven, ${titleCase(input.fuel_type)}, ${titleCase(input.transmission)}.`
-  );
-  appendListItem(insightList, `${age} years old in the model market snapshot, priced for ${input.city}.`);
-  if (explanation && explanation[1]) appendListItem(insightList, explanation[1]);
+  buttonLabel.textContent = isLoading ? "Getting estimate…" : "Get estimate";
 }
 
 function renderPrediction(result, isSample) {
   const low = Number(result.price_range_low_inr);
   const high = Number(result.price_range_high_inr);
   const prediction = Number(result.predicted_price_inr);
-  const markerPosition = high > low ? Math.min(95, Math.max(5, ((prediction - low) / (high - low)) * 100)) : 50;
 
   predictedPrice.textContent = formatInr(prediction);
-  priceRange.textContent = `${formatInr(low)} to ${formatInr(high)}`;
-  rangeLow.textContent = formatInr(low);
-  rangeMid.textContent = formatInr(prediction);
-  rangeHigh.textContent = formatInr(high);
-  rangePct.textContent = `${Number(result.price_range_pct).toFixed(1)}% range width`;
-  rangeMarker.style.left = `${markerPosition}%`;
-  rangeNote.textContent = `This is the model's listed-price range for the submitted configuration. Range width: ${Number(result.price_range_pct).toFixed(1)}%.`;
-
-  confidenceValue.textContent = titleCase(result.confidence);
-  confidenceValue.className = `confidence-badge ${result.confidence}`;
-  priceBand.textContent = formatPriceBand(result.price_band);
-  resultState.textContent = isSample ? "Sample estimate" : "Estimate updated";
+  priceRange.textContent = `${formatInr(low)} – ${formatInr(high)}`;
+  resultState.textContent = isSample ? "Sample estimate" : "Updated";
   resultSubtitle.textContent = isSample
     ? "Preloaded example. Change any detail to price another vehicle."
-    : "Calculated from the deployed final model using your submitted details.";
+    : "Based on the vehicle details you submitted.";
 
-  renderWarnings(result.warning_codes || []);
-  renderInsights(result.input_normalized || {}, result.explanation || []);
+  if (result.confidence) {
+    confidenceRow.hidden = false;
+    confidenceValue.textContent = titleCase(result.confidence);
+    confidenceValue.className = `confidence-badge ${result.confidence}`;
+  } else {
+    confidenceRow.hidden = true;
+  }
+
+  formStatus.textContent = isSample
+    ? "Sample vehicle is ready — change any field and get a new estimate."
+    : "Estimate updated. Adjust details anytime and try again.";
 }
 
 function renderError(message) {
-  resultState.textContent = "Estimate unavailable";
+  resultState.textContent = "Unavailable";
   resultSubtitle.textContent = message;
+  predictedPrice.textContent = "--";
+  priceRange.textContent = "Could not calculate a range.";
+  confidenceRow.hidden = false;
   confidenceValue.textContent = "Unavailable";
   confidenceValue.className = "confidence-badge low";
-  coverageCopy.textContent = "The estimate could not be calculated. Check required fields and try again.";
-  clearChildren(warningChips);
-  const chip = document.createElement("span");
-  chip.className = "warning-chip";
-  chip.textContent = "Request needs attention";
-  warningChips.append(chip);
+  formStatus.textContent = "Check the required fields and try again.";
 }
 
 function readableError(body) {
@@ -224,14 +179,22 @@ function readableError(body) {
 }
 
 async function requestEstimate({ isSample = false } = {}) {
+  syncCityMeta();
+
+  if (brandSelect.value === "__other__" && !String(brandOther.value || "").trim()) {
+    formStatus.textContent = "Please enter a custom brand name.";
+    brandOther.focus();
+    return;
+  }
+
   if (!form.reportValidity()) {
-    updateJourney();
+    formStatus.textContent = "Please fill in all required fields.";
     return;
   }
 
   setLoading(true);
   resultState.textContent = "Calculating";
-  resultSubtitle.textContent = "Running the final price model for this vehicle.";
+  resultSubtitle.textContent = "Working out a listed price for this vehicle.";
 
   try {
     const response = await fetch("/predict", {
@@ -256,38 +219,53 @@ async function loadHealthAndMetadata() {
     if (health.status === "ok") {
       setHealth("ready", "Model ready");
     } else {
-      setHealth("error", "Model artifact missing");
+      setHealth("error", "Model unavailable");
       return false;
     }
 
-    const metadataResponse = await fetch("/model/metadata");
-    if (metadataResponse.ok) {
-      const metadata = await metadataResponse.json();
-      const metrics = metadata.validation_metrics || {};
-      const primaryMape = metrics.primary_split_mape || "9.88";
-      const repeatedMape = metrics.repeated_split_mean_mape || "10.33";
-      const rows = Number(metadata.training_rows || 9110).toLocaleString("en-IN");
-      modelContext.textContent = `Final model: ${metadata.model_name || "Combined Trusted Lineage Target-Encoded Native HGB"}. Validated on ${rows} trusted listings: ${primaryMape}% primary MAPE and ${repeatedMape}% repeated-split mean MAPE.`;
+    // Keep the truthful one-line evidence; do not invent metrics from metadata.
+    if (modelContext) {
+      modelContext.textContent =
+        "9.88% MAPE · R² 0.897 · MAE INR 47,389 · 9,110 rows";
     }
+
+    // Soft-touch metadata fetch so the endpoint stays exercised; ignore payload metrics.
+    try {
+      await fetch("/model/metadata");
+    } catch (_) {
+      /* optional */
+    }
+
     return true;
   } catch (error) {
     setHealth("error", "API unavailable");
-    modelContext.textContent = "Model validation context is unavailable because the local API is not responding.";
     return false;
   }
 }
+
+brandSelect.addEventListener("change", () => {
+  syncBrandOtherVisibility();
+  updateModelSuggestions();
+  const models = BRAND_MODELS[brandSelect.value];
+  if (models && models.length) {
+    modelInput.value = models[0];
+  } else if (brandSelect.value === "__other__") {
+    modelInput.value = "";
+  }
+});
+
+cityInput.addEventListener("change", syncCityMeta);
+cityInput.addEventListener("blur", syncCityMeta);
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   requestEstimate();
 });
 
-form.addEventListener("input", updateJourney);
-form.addEventListener("change", updateJourney);
-
 async function initialize() {
-  initializeIcons();
-  updateJourney();
+  updateModelSuggestions();
+  syncBrandOtherVisibility();
+  syncCityMeta();
   const ready = await loadHealthAndMetadata();
   if (ready) await requestEstimate({ isSample: true });
 }

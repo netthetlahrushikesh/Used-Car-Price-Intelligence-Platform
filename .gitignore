@@ -55,6 +55,8 @@ artifacts/*
 !artifacts/model/
 !artifacts/model/final_price_model_v1/
 !artifacts/model/final_price_model_v1/**
+!artifacts/monitoring/
+!artifacts/monitoring/reference_feature_stats.json
 *.duckdb
 *.duckdb.wal
 *.db
@@ -62,6 +64,9 @@ artifacts/*
 *.parquet
 *.csv
 *.jsonl
+!tests/fixtures/mlops/
+!tests/fixtures/mlops/**
+!tests/fixtures/mlops/sample_predictions.jsonl
 *.log
 *.joblib
 !artifacts/model/final_price_model_v1/*.joblib
@@ -78,3 +83,11 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+
+# MLOps v2 runtime outputs (keep placeholders / reference stats trackable)
+logs/**
+!logs/.gitkeep
+reports/**
+!reports/.gitkeep
+!artifacts/monitoring/
+!artifacts/monitoring/reference_feature_stats.json

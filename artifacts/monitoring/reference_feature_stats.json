@@ -1,0 +1,68 @@
+{
+  "generated_at_utc": "2026-09-22T05:37:03Z",
+  "source": "fixture_bootstrap_sample_predictions",
+  "note": "Built from tests/fixtures/mlops/sample_predictions.jsonl for monitoring plumbing. Replace with stats computed from gold/training data before treating PSI as real drift. Example: aggregate model_year, km_driven, ownership, market_snapshot_year from the final modeling dataset used for final_price_model_v1.",
+  "n_rows": 6,
+  "features": {
+    "model_year": {
+      "count": 6,
+      "mean": 2019.0,
+      "std": 1.2909944487358056,
+      "min": 2017.0,
+      "max": 2021.0,
+      "values": [
+        2019.0,
+        2018.0,
+        2020.0,
+        2021.0,
+        2017.0,
+        2019.0
+      ]
+    },
+    "km_driven": {
+      "count": 6,
+      "mean": 45166.666666666664,
+      "std": 17218.368744518808,
+      "min": 25000.0,
+      "max": 78000.0,
+      "values": [
+        45000.0,
+        52000.0,
+        30000.0,
+        25000.0,
+        78000.0,
+        41000.0
+      ]
+    },
+    "market_snapshot_year": {
+      "count": 6,
+      "mean": 2026.0,
+      "std": 0.0,
+      "min": 2026.0,
+      "max": 2026.0,
+      "values": [
+        2026.0,
+        2026.0,
+        2026.0,
+        2026.0,
+        2026.0,
+        2026.0
+      ]
+    },
+    "ownership": {
+      "count": 6,
+      "mean": 1.1666666666666667,
+      "std": 0.37267799624996495,
+      "min": 1.0,
+      "max": 2.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        2.0,
+        1.0
+      ]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./logs:/app/logs
+    environment:
+      USED_CAR_PREDICTION_LOG: /app/logs/predictions.jsonl
+    # Optional: override model artifact path inside the container
+    # USED_CAR_MODEL_ARTIFACT: /app/artifacts/model/final_price_model_v1/final_price_model_v1.joblib
