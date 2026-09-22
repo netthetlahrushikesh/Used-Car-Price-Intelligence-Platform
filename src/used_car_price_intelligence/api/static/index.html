@@ -8,7 +8,7 @@
       content="Check a used car's listed asking price estimate from market-trained model data."
     />
     <title>Used Car Price Intelligence</title>
-    <link rel="stylesheet" href="/static/styles.css?v=20260922-ui1" />
+    <link rel="stylesheet" href="/static/styles.css?v=20260922-ui2" />
   </head>
   <body>
     <div class="page">
@@ -28,7 +28,7 @@
           <div class="card-intro">
             <h1 id="formTitle">Check used car listed price</h1>
             <p class="subtitle">
-              Enter a few vehicle details for a listed asking price estimate.
+              Enter a few vehicle details to see a typical listed asking price.
             </p>
           </div>
 
@@ -36,12 +36,50 @@
             <div class="form-grid">
               <label class="field">
                 <span class="field-label">Brand</span>
-                <input name="brand" required value="Maruti Suzuki" autocomplete="off" />
+                <select name="brand" id="brandSelect" required>
+                  <option value="Maruti Suzuki" selected>Maruti Suzuki</option>
+                  <option value="Hyundai">Hyundai</option>
+                  <option value="Honda">Honda</option>
+                  <option value="Tata">Tata</option>
+                  <option value="Mahindra">Mahindra</option>
+                  <option value="Toyota">Toyota</option>
+                  <option value="Kia">Kia</option>
+                  <option value="Volkswagen">Volkswagen</option>
+                  <option value="Skoda">Skoda</option>
+                  <option value="Renault">Renault</option>
+                  <option value="Nissan">Nissan</option>
+                  <option value="Ford">Ford</option>
+                  <option value="MG">MG</option>
+                  <option value="BMW">BMW</option>
+                  <option value="Mercedes-Benz">Mercedes-Benz</option>
+                  <option value="Audi">Audi</option>
+                  <option value="__other__">Other…</option>
+                </select>
+              </label>
+
+              <label class="field" id="brandOtherField" hidden>
+                <span class="field-label">Custom brand</span>
+                <input
+                  type="text"
+                  id="brandOther"
+                  name="brand_other"
+                  autocomplete="off"
+                  placeholder="Type brand name"
+                />
               </label>
 
               <label class="field">
                 <span class="field-label">Model</span>
-                <input name="model" required value="Swift" autocomplete="off" />
+                <input
+                  name="model"
+                  id="modelInput"
+                  list="modelSuggestions"
+                  required
+                  value="Swift"
+                  autocomplete="off"
+                  placeholder="e.g. Swift"
+                />
+                <datalist id="modelSuggestions"></datalist>
               </label>
 
               <label class="field">
@@ -92,15 +130,35 @@
 
               <label class="field field--full">
                 <span class="field-label">City</span>
-                <input name="city" required value="Hyderabad" autocomplete="off" />
+                <input
+                  name="city"
+                  id="cityInput"
+                  list="citySuggestions"
+                  required
+                  value="Hyderabad"
+                  autocomplete="off"
+                  placeholder="e.g. Hyderabad"
+                />
+                <datalist id="citySuggestions">
+                  <option value="Hyderabad"></option>
+                  <option value="Bengaluru"></option>
+                  <option value="Chennai"></option>
+                  <option value="Mumbai"></option>
+                  <option value="Pune"></option>
+                  <option value="Delhi"></option>
+                  <option value="Ahmedabad"></option>
+                  <option value="Kolkata"></option>
+                  <option value="Jaipur"></option>
+                  <option value="Kochi"></option>
+                </datalist>
               </label>
             </div>
 
             <!-- Hidden defaults required by the API -->
             <input type="hidden" name="variant" value="VXI" />
             <input type="hidden" name="ownership" value="1" />
-            <input type="hidden" name="state" value="Telangana" />
-            <input type="hidden" name="registration_code" value="TS" />
+            <input type="hidden" name="state" id="stateField" value="Telangana" />
+            <input type="hidden" name="registration_code" id="regCodeField" value="TS" />
             <input type="hidden" name="source_context" value="market_default" />
 
             <button class="cta" type="submit" id="estimateButton">
@@ -121,7 +179,7 @@
           <p class="result-lede" id="resultSubtitle">Loading the prefilled example vehicle.</p>
 
           <p class="price-hero" id="predictedPrice">--</p>
-          <p class="price-range" id="priceRange">A model range will appear here.</p>
+          <p class="price-range" id="priceRange">A price range will appear here.</p>
 
           <p class="honesty" id="honestyLine">
             This is a listed asking price estimate, not a dealer quote or final sale price.
@@ -136,12 +194,12 @@
 
       <footer class="site-footer">
         <p class="evidence" id="modelContext">
-          Model evidence: 9.88% MAPE · R² 0.897 · MAE INR 47,389 · 9,110 rows
+          9.88% MAPE · R² 0.897 · MAE INR 47,389 · 9,110 rows
         </p>
         <a class="docs-link" href="/docs" target="_blank" rel="noreferrer">API docs</a>
       </footer>
     </div>
 
-    <script src="/static/app.js?v=20260922-ui1" defer></script>
+    <script src="/static/app.js?v=20260922-ui2" defer></script>
   </body>
 </html>

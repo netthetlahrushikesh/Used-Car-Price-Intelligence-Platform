@@ -10,6 +10,48 @@ const priceRange = document.querySelector("#priceRange");
 const confidenceRow = document.querySelector("#confidenceRow");
 const confidenceValue = document.querySelector("#confidenceValue");
 const modelContext = document.querySelector("#modelContext");
+const brandSelect = document.querySelector("#brandSelect");
+const brandOtherField = document.querySelector("#brandOtherField");
+const brandOther = document.querySelector("#brandOther");
+const modelInput = document.querySelector("#modelInput");
+const modelSuggestions = document.querySelector("#modelSuggestions");
+const cityInput = document.querySelector("#cityInput");
+const stateField = document.querySelector("#stateField");
+const regCodeField = document.querySelector("#regCodeField");
+
+const BRAND_MODELS = {
+  "Maruti Suzuki": ["Swift", "Baleno", "Dzire", "Wagon R", "Alto", "Ertiga", "Brezza", "Celerio", "Ignis"],
+  Hyundai: ["i20", "Creta", "Venue", "i10", "Verna", "Alcazar", "Aura"],
+  Honda: ["City", "Amaze", "Jazz", "WR-V", "Elevate"],
+  Tata: ["Nexon", "Punch", "Altroz", "Tiago", "Harrier", "Safari"],
+  Mahindra: ["XUV700", "Scorpio", "XUV300", "Bolero", "Thar", "XUV400"],
+  Toyota: ["Innova", "Fortuner", "Glanza", "Urban Cruiser", "Camry", "Hyryder"],
+  Kia: ["Seltos", "Sonet", "Carnival", "Carens"],
+  Volkswagen: ["Polo", "Vento", "Taigun", "Virtus"],
+  Skoda: ["Rapid", "Octavia", "Kushaq", "Slavia", "Superb"],
+  Renault: ["Kwid", "Triber", "Kiger", "Duster"],
+  Nissan: ["Magnite", "Kicks", "Sunny"],
+  Ford: ["EcoSport", "Figo", "Endeavour", "Freestyle"],
+  MG: ["Hector", "Astor", "ZS EV", "Comet"],
+  BMW: ["3 Series", "5 Series", "X1", "X3", "X5"],
+  "Mercedes-Benz": ["C-Class", "E-Class", "GLA", "GLC", "A-Class"],
+  Audi: ["A4", "A6", "Q3", "Q5", "Q7"],
+};
+
+const CITY_META = {
+  Hyderabad: { state: "Telangana", code: "TS" },
+  Bengaluru: { state: "Karnataka", code: "KA" },
+  Bangalore: { state: "Karnataka", code: "KA" },
+  Chennai: { state: "Tamil Nadu", code: "TN" },
+  Mumbai: { state: "Maharashtra", code: "MH" },
+  Pune: { state: "Maharashtra", code: "MH" },
+  Delhi: { state: "Delhi", code: "DL" },
+  "New Delhi": { state: "Delhi", code: "DL" },
+  Ahmedabad: { state: "Gujarat", code: "GJ" },
+  Kolkata: { state: "West Bengal", code: "WB" },
+  Jaipur: { state: "Rajasthan", code: "RJ" },
+  Kochi: { state: "Kerala", code: "KL" },
+};
 
 function formatInr(value) {
   if (!Number.isFinite(Number(value))) return "--";
@@ -29,8 +71,47 @@ function titleCase(value) {
     .replace(/\b\w/g, (character) => character.toUpperCase());
 }
 
+function resolveBrand() {
+  if (brandSelect.value === "__other__") {
+    return String(brandOther.value || "").trim();
+  }
+  return brandSelect.value;
+}
+
+function updateModelSuggestions() {
+  const brand = brandSelect.value === "__other__" ? "" : brandSelect.value;
+  const models = BRAND_MODELS[brand] || [];
+  modelSuggestions.innerHTML = models.map((m) => `<option value="${m}"></option>`).join("");
+}
+
+function syncBrandOtherVisibility() {
+  const isOther = brandSelect.value === "__other__";
+  brandOtherField.hidden = !isOther;
+  if (isOther) {
+    brandOther.required = true;
+    brandOther.focus();
+  } else {
+    brandOther.required = false;
+    brandOther.value = "";
+  }
+}
+
+function syncCityMeta() {
+  const city = String(cityInput.value || "").trim();
+  const meta = CITY_META[city];
+  if (meta) {
+    stateField.value = meta.state;
+    regCodeField.value = meta.code;
+  } else {
+    stateField.value = "unknown";
+    regCodeField.value = "unknown";
+  }
+}
+
 function formPayload() {
   const values = Object.fromEntries(new FormData(form).entries());
+  delete values.brand_other;
+  values.brand = resolveBrand();
   values.model_year = Number(values.model_year);
   values.km_driven = Number(values.km_driven);
   values.variant = String(values.variant || "").trim() || "unknown";
@@ -98,6 +179,14 @@ function readableError(body) {
 }
 
 async function requestEstimate({ isSample = false } = {}) {
+  syncCityMeta();
+
+  if (brandSelect.value === "__other__" && !String(brandOther.value || "").trim()) {
+    formStatus.textContent = "Please enter a custom brand name.";
+    brandOther.focus();
+    return;
+  }
+
   if (!form.reportValidity()) {
     formStatus.textContent = "Please fill in all required fields.";
     return;
@@ -105,7 +194,7 @@ async function requestEstimate({ isSample = false } = {}) {
 
   setLoading(true);
   resultState.textContent = "Calculating";
-  resultSubtitle.textContent = "Running the price model for this vehicle.";
+  resultSubtitle.textContent = "Working out a listed price for this vehicle.";
 
   try {
     const response = await fetch("/predict", {
@@ -137,7 +226,7 @@ async function loadHealthAndMetadata() {
     // Keep the truthful one-line evidence; do not invent metrics from metadata.
     if (modelContext) {
       modelContext.textContent =
-        "Model evidence: 9.88% MAPE · R² 0.897 · MAE INR 47,389 · 9,110 rows";
+        "9.88% MAPE · R² 0.897 · MAE INR 47,389 · 9,110 rows";
     }
 
     // Soft-touch metadata fetch so the endpoint stays exercised; ignore payload metrics.
@@ -154,12 +243,29 @@ async function loadHealthAndMetadata() {
   }
 }
 
+brandSelect.addEventListener("change", () => {
+  syncBrandOtherVisibility();
+  updateModelSuggestions();
+  const models = BRAND_MODELS[brandSelect.value];
+  if (models && models.length) {
+    modelInput.value = models[0];
+  } else if (brandSelect.value === "__other__") {
+    modelInput.value = "";
+  }
+});
+
+cityInput.addEventListener("change", syncCityMeta);
+cityInput.addEventListener("blur", syncCityMeta);
+
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   requestEstimate();
 });
 
 async function initialize() {
+  updateModelSuggestions();
+  syncBrandOtherVisibility();
+  syncCityMeta();
   const ready = await loadHealthAndMetadata();
   if (ready) await requestEstimate({ isSample: true });
 }
