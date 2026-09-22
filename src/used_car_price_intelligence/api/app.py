@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import time
 from typing import Any
 
 from fastapi import FastAPI, HTTPException, status
@@ -10,6 +11,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from used_car_price_intelligence import __version__
+from used_car_price_intelligence.api.prediction_logging import log_successful_prediction
 from used_car_price_intelligence.api.schemas import (
     ErrorResponse,
     HealthResponse,
@@ -68,10 +70,20 @@ def create_app(service: PredictionService | None = None) -> FastAPI:
         tags=["prediction"],
     )
     def predict(request: PredictionRequest) -> PredictionResponse:
+        started = time.perf_counter()
         try:
-            return prediction_service.predict(request)
+            response = prediction_service.predict(request)
         except ModelArtifactNotFound as exc:
             raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)) from exc
+
+        latency_ms = (time.perf_counter() - started) * 1000.0
+        # Best-effort: never fail the response if disk logging fails.
+        log_successful_prediction(
+            features=request.to_artifact_payload(),
+            predicted_price=response.predicted_price_inr,
+            latency_ms=latency_ms,
+        )
+        return response
 
     @app.post(
         "/predict/batch",
