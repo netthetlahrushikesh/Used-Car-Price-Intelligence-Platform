@@ -24,8 +24,11 @@ class PredictionApiTests(unittest.TestCase):
 
         self.assertEqual(root_response.status_code, 200)
         self.assertIn("Used Car Price Intelligence", root_response.text)
+        self.assertIn("Check used car listed price", root_response.text)
+        self.assertIn("Get estimate", root_response.text)
         self.assertEqual(css_response.status_code, 200)
-        self.assertIn(".workspace", css_response.text)
+        self.assertIn(".page", css_response.text)
+        self.assertIn(".price-hero", css_response.text)
         self.assertEqual(js_response.status_code, 200)
         self.assertIn("/predict", js_response.text)
 
